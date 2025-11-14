@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trang Chủ - Cửa Hàng</title>
+    <!-- Bootstrap 5 CSS -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/quartz/bootstrap.min.css" />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/css/Style.css" />
+</head>
+<body>
+    <header class="header-section">
+        <div class="container-fluid px-4">
+            <div class="row align-items-center py-2">
+                <!-- Navigation Menu -->
+
+                <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#">Navbar</a>
+                        <button class="navbar-toggler"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#navbarColor01"
+                                aria-controls="navbarColor01"
+                                aria-expanded="false"
+                                aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarColor01">
+                            <!--
+                                    Bí thuật nằm ở đây nè (me-auto) làm cho các phần tử bên trong giữ nguyên
+                                    còn đứa nào ở ngoài me-auto trong cái div này thì cúc xuống cuối-->
+                            <ul class="navbar-nav me-auto nav">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#">
+                                        Trang chủ
+                                        <span class="visually-hidden">(current)</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link bg-"
+                                       data-bs-toggle="tab"
+                                       aria-selected="true"
+                                       role="tab"
+                                       href="#">Liên hệ</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Giới thiệu</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle"
+                                       data-bs-toggle="dropdown"
+                                       href="#"
+                                       role="button"
+                                       aria-haspopup="true"
+                                       aria-expanded="false">Dropdown</a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">Action</a>
+                                        <a class="dropdown-item" href="#">Another action</a>
+                                        <a class="dropdown-item" href="#">Something else here</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">Separated link</a>
+                                    </div>
+                                </li>
+                            </ul>
+                            <!--Thế là seach, login và giỏ hàng là cúc xuống-->
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Login</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Giỏ hàng</a>
+                                </li>
+                            </ul>
+                            <form class="d-flex">
+                                <input class="form-control me-sm-2"
+                                       type="search"
+                                       placeholder="Search" />
+                                <button class="btn btn-secondary my-2 my-sm-0" type="submit">
+                                    Search
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="bg-dark text-light pt-4 pb-3 mt-5">
+        <div class="container">
+            <div class="row">
+                <!-- Cột 1: Thông tin -->
+                <div class="col-md-4 mb-3">
+                    <h5 class="text-uppercase mb-3">NTTU with luv</h5>
+                    <p>Một chiếc web với quả theme sến súa❤️</p>
+                    <p>Cammonvidaden</p>
+                </div>
+
+                <!-- Cột 2: Liên hệ -->
+                <div class="col-md-4 mb-3">
+                    <h5 class="text-uppercase mb-3">Liên Hệ</h5>
+                    <ul class="list-unstyled">
+                        <li>
+                            <i class="bi bi-geo-alt-fill me-2"></i>TP. Hồ Chí Minh, Việt Nam
+                        </li>
+                        <li><i class="bi bi-telephone-fill me-2"></i>+84 56 4705 149</li>
+                        <li><i class="bi bi-envelope-fill me-2"></i>1901duy@gmail.com</li>
+                    </ul>
+                </div>
+
+                <!-- Cột 3: Mạng xã hội -->
+                <div class="col-md-4 mb-3">
+                    <h5 class="text-uppercase mb-3">Theo Dõi Chúng Tôi</h5>
+                    <div>
+                        <a href="https://www.facebook.com/Dyneahihi612?locale=vi_VN"
+                           class="text-light me-3">
+                            <i class="bi bi-facebook fs-4"></i>
+                        </a>
+                        <a href="https://github.com/MDuyy" class="text-light">
+                            <i class="bi bi-github fs-4"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="border-secondary" />
+
+            <div class="text-center small">
+                © 2025 VietNamFood (VNF). All rights reserved.
+            </div>
+        </div>
+    </footer>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

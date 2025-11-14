@@ -1,0 +1,56 @@
+/* Đảm bảo container co giãn theo màn hình */
+.container {
+    width: 100%;
+    max-width: 1200px; /* hoặc lớn hơn nếu bạn muốn */
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+.nav-tabs .nav-link.active {
+  color: var(
+    --bs-primary-text-emphasis
+  ) !important; /* đổi màu chữ khi active */
+  background-color: var(--bs-light) !important; /* giữ nền sáng */
+  border-color: var(--bs-primary) !important; /* viền theo màu chủ đạo */
+}
+.product-row {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 1rem;
+}
+.product-row::-webkit-scrollbar {
+  height: 8px;
+}
+
+.product-row::-webkit-scrollbar-thumb {
+  background-color: #dc35b0;
+  border-radius: 4px;
+}
+.product-card {
+  flex: 0 0 auto;
+  width: 260px; /* kích thước card cố định cho cuộn ngang */
+  scroll-snap-align: start;
+}
+.card-img-top {
+  object-fit: cover;
+  height: 180px;
+}
+.btn-group-custom {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.card .btn {
+  padding: 0.25rem 0.5rem; /* giảm padding */
+  font-size: 0.875rem;     /* chữ nhỏ hơn */
+  border-radius: 0.5rem;
+  letter-spacing: 0.2px;
+}
+
+.pagination {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto; /* để có thể kéo ngang nếu tràn */
+}
