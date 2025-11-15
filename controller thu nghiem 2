@@ -1,0 +1,79 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Đồ_Án_Lập_Trình_Web_Bán_Thức_Ăn_Nhanh.Models;
+using System.Diagnostics;
+
+namespace Đồ_Án_Lập_Trình_Web_Bán_Thức_Ăn_Nhanh.Controllers
+{
+    public class HomeController : Controller
+    {
+        private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _context;
+
+        // Constructor inject logger và DbContext
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+        {
+            _logger = logger;
+            _context = context;
+        }
+
+        /// <summary>
+        /// Trang chủ: hiển thị sản phẩm Bán chạy, Món mới, Món tuổi thơ
+        /// </summary>
+        public async Task<IActionResult> Index()
+        {
+            var sanPhamBanChay = await _context.SanPhams
+                .Where(s => s.IsPopular) // Lọc sản phẩm bán chạy
+                .Take(8)
+                .ToListAsync();
+
+            var sanPhamMoi = await _context.SanPhams
+                .Where(s => s.IsNew) // Lọc sản phẩm mới
+                .Take(8)
+                .ToListAsync();
+
+            var sanPhamTuoiTho = await _context.SanPhams
+                .Where(s => s.IsChildhood) // Lọc sản phẩm tuổi thơ
+                .Take(8)
+                .ToListAsync();
+
+            // Gói dữ liệu vào ViewModel
+            var model = new HomeIndexViewModel
+            {
+                BanChay = sanPhamBanChay,
+                MonMoi = sanPhamMoi,
+                MonTuoiTho = sanPhamTuoiTho
+            };
+
+            return View(model);
+        }
+
+        // Trang hiển thị tất cả sản phẩm
+        public async Task<IActionResult> Products()
+        {
+            var sanPhams = await _context.SanPhams.ToListAsync();
+            return View(sanPhams);
+        }
+
+        public IActionResult About() => View();
+        public IActionResult Contact() => View();
+        public IActionResult Privacy() => View();
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel
+            {
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            });
+        }
+    }
+
+    // ViewModel cho trang Index
+    public class HomeIndexViewModel
+    {
+        public List<SanPham> BanChay { get; set; } = new List<SanPham>();
+        public List<SanPham> MonMoi { get; set; } = new List<SanPham>();
+        public List<SanPham> MonTuoiTho { get; set; } = new List<SanPham>();
+    }
+}
