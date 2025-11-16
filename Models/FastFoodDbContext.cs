@@ -18,11 +18,14 @@ namespace DoAnLapTrinhWebBanThucAnNhanh.Models
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Report> Reports { get; set; }
 
+        // ⚠️ THÊM BẢNG IMAGE VÀO ĐÂY
+        public DbSet<ProductImage> ProductImages { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Ví dụ: CategoryName unique
+            // Unique category name
             modelBuilder.Entity<Category>()
                 .HasIndex(c => c.CategoryName)
                 .IsUnique();

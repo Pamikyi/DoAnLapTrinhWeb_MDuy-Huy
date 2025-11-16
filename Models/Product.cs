@@ -20,6 +20,8 @@ namespace DoAnLapTrinhWebBanThucAnNhanh.Models
         [Display(Name = "Mô tả sản phẩm")]
         [StringLength(1000)]
         public string? Descriptions { get; set; }
+        public string? DetailDescription { get; set; }
+        public string? Ingredients { get; set; }
 
         [Required(ErrorMessage = "Giá sản phẩm không được để trống")]
         [Column(TypeName = "decimal(10,2)")]
