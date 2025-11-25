@@ -1,0 +1,106 @@
+<!-- Sidebar -->
+<nav class="sidebar" id="sidebar">
+    <h5 class="text-center mb-3">Admin Panel</h5>
+    <ul class="nav flex-column mb-auto">
+        <li><a href="#" class="nav-link active" data-page="dashboard"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a></li>
+        <li><a href="#" class="nav-link" data-page="products"><i class="bi bi-box-seam me-2"></i>Sản phẩm</a></li>
+        <li><a href="#" class="nav-link" data-page="categories"><i class="bi bi-tags me-2"></i>Danh mục</a></li>
+        <li><a href="#" class="nav-link" data-page="orders"><i class="bi bi-cart-check me-2"></i>Đơn hàng</a></li>
+        <li><a href="#" class="nav-link" data-page="users"><i class="bi bi-people me-2"></i>Người dùng</a></li>
+        <li><a href="#" class="nav-link" data-page="contacts"><i class="bi bi-envelope me-2"></i>Liên hệ</a></li>
+    </ul>
+</nav>
+
+<!-- Top Navbar -->
+<nav class="navbar navbar-light bg-light shadow-sm top-navbar">
+    <div class="container-fluid">
+        <button class="btn btn-primary me-2" id="sidebarToggle"><i class="bi bi-list"></i></button>
+        <span class="navbar-brand fw-bold">Admin Panel</span>
+        <div class="d-flex align-items-center ms-auto">
+            <span class="me-3"><i class="bi bi-person-circle"></i> Admin</span>
+            <button class="btn btn-outline-danger btn-sm" id="logoutBtn">Đăng xuất</button>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="main-content" id="mainContent">
+
+<!-- Dashboard -->
+<div id="dashboard" class="page">
+    <h2>Dashboard</h2>
+    <div class="row g-3 mt-3">
+        <div class="col-md-3"><div class="card p-3 bg-primary text-white"><h3>120</h3><p>Sản phẩm</p></div></div>
+        <div class="col-md-3"><div class="card p-3 bg-success text-white"><h3>78</h3><p>Đơn hàng</p></div></div>
+        <div class="col-md-3"><div class="card p-3 bg-warning text-white"><h3>52</h3><p>Người dùng</p></div></div>
+<div class="col-md-3"><div class="card p-3 bg-danger text-white"><h4>8,500,000đ</h4><p>Doanh thu</p></div></div>
+    </div>
+    <div class="card mt-4 p-3 shadow-sm">
+        <h5>Biểu đồ doanh thu</h5>
+        <canvas id="chartRevenue"></canvas>
+    </div>
+</div>
+
+<!-- Products -->
+<div id="products" class="page" style="display:none;">
+    <h2>Quản lý Sản phẩm</h2>
+    <button class="btn btn-primary mb-2" id="btnAddProduct"><i class="bi bi-plus-lg"></i> Thêm sản phẩm</button>
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark"><tr><th>#</th><th>Tên SP</th><th>Danh mục</th><th>Giá</th><th>Trạng thái</th><th>Hành động</th></tr></thead>
+        <tbody id="productTable">
+            <tr>
+                <td>1</td><td>Gà rán</td><td>Fastfood</td><td>45,000đ</td><td><span class="badge bg-success">Còn</span></td>
+                <td>
+                    <button class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Categories -->
+<div id="categories" class="page" style="display:none;">
+    <h2>Quản lý Danh mục</h2>
+    <button class="btn btn-primary mb-2"><i class="bi bi-plus-lg"></i> Thêm danh mục</button>
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark"><tr><th>#</th><th>Tên danh mục</th><th>Hành động</th></tr></thead>
+        <tbody>
+            <tr><td>1</td><td>Fastfood</td><td>
+                <button class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i></button>
+                <button class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
+            </td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Orders -->
+<div id="orders" class="page" style="display:none;">
+    <h2>Quản lý Đơn hàng</h2>
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark"><tr><th>Mã đơn</th><th>Khách hàng</th><th>Ngày</th><th>Tổng tiền</th><th>Trạng thái</th></tr></thead>
+        <tbody>
+            <tr><td>OD001</td><td>Nguyễn Văn A</td><td>01/11/2025</td><td>8,000,000đ</td><td><span class="badge bg-warning">Đang xử lý</span></td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Users -->
+<div id="users" class="page" style="display:none;">
+    <h2>Quản lý Người dùng</h2>
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark"><tr><th>#</th><th>Tên đăng nhập</th><th>Quyền</th></tr></thead>
+        <tbody><tr><td>1</td><td>admin</td><td><span class="badge bg-danger">Admin</span></td></tr></tbody>
+    </table>
+</div>
+
+<!-- Contacts -->
+<div id="contacts" class="page" styleD="display:none;">
+    <h2>Quản lý Liên hệ</h2>
+    <table class="table table-bordered">
+<thead class="table-dark"><tr><th>#</th><th>Khách hàng</th><th>Nội dung</th></tr></thead>
+        <tbody><tr><td>1</td><td>Lê Thị B</td><td>Cần tư vấn thêm về lắc tay.</td></tr></tbody>
+    </table>
+</div>
+
+</div>

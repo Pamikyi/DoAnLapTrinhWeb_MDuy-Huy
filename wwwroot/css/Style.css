@@ -5,6 +5,18 @@
     margin: 0 auto;
     box-sizing: border-box;
 }
+
+body { overflow-x: hidden; }
+.sidebar {
+    width: 220px; height: 100vh; position: fixed; background: #343a40; padding-top: 60px; color: white;
+}
+.sidebar a { color: #ddd; padding: 10px; display: block; text-decoration: none; }
+.sidebar a:hover, .sidebar a.active { background: #495057; color: #fff; }
+.top-navbar { position: fixed; left: 220px; width: calc(100% - 220px); z-index: 1000; }
+.main-content { margin-left: 220px; padding: 70px 20px 20px 20px; min-height: 100vh; transition: all 0.3s; }
+.sidebar.hidden { margin-left: -220px; }
+.main-content.full-width { margin-left: 0; }
+.card { border-radius: 0.5rem; }
 .nav-tabs .nav-link.active {
   color: var(
     --bs-primary-text-emphasis

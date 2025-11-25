@@ -13,7 +13,7 @@
                         foreach (var img in Model.Images)
                         {
                             <div class="carousel-item @(first ? "active" : "")">
-                                <img src="@img.ImageUrl" class="d-block w-100 rounded" alt="@Model.Product.ProductName" />
+                                <img src="@img.ImageUrl" class="d-block w-100 rounded" alt=".ProductName" />
                             </div>
                             first = false;
                         }
@@ -57,7 +57,7 @@
     </div>
 
     <!-- TAB BUTTONS -->
-<ul class="nav nav-tabs" id="productTabs" role="tablist">
+<ul class="nav nav-tabs mt-2" id="productTabs" role="tablist">
     <li class="nav-item" role="presentation">
         <button class="nav-link active"
                 id="description-tab"
@@ -87,7 +87,7 @@
 
 
 <!-- TAB CONTENT -->
-    <div class="row mt-5">
+    <div class="row mt-1">
             <div class="tab-content mt-1" id="productTabsContent">
 
                 <!-- TAB: MÔ TẢ -->
@@ -144,10 +144,6 @@
 
         </div>
     </div>
-
-
-
-
     <!-- Sản phẩm khác -->
     <div class="container py-3">
         <h3 class="mb-3">Sản phẩm khác</h3>
@@ -174,4 +170,4 @@
             }
         </div>
     </div>
-</div>
+
