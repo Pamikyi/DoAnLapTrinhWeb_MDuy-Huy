@@ -37,3 +37,24 @@ new Chart(ctx, {
         datasets: [{ label: 'Doanh thu (triệu VNĐ)', data: [10, 14, 9, 16, 20, 25], backgroundColor: 'rgba(54,162,235,0.7)' }]
     }
 });
+
+// Login
+document.getElementById("loginForm").addEventListener("submit", function (event) {
+    event.preventDefault(); // Ngăn tải lại trang
+
+    let user = document.getElementById("username").value;
+    let pass = document.getElementById("password").value;
+
+    // Kiểm tra tài khoản admin
+    if (user === "admin" && pass === "admin123") {
+        window.location.href = "admin.html"; // chuyển sang trang admin
+    }
+    // Kiểm tra tài khoản người dùng
+    else if (user === "user" && pass === "user123") {
+        window.location.href = "index.html"; // chuyển sang trang chủ
+    }
+    // Sai thông tin
+    else {
+        document.getElementById("error").classList.remove("d-none");
+    }
+});
