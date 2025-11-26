@@ -66,3 +66,12 @@ body { overflow-x: hidden; }
     flex-wrap: nowrap;
     overflow-x: auto; /* để có thể kéo ngang nếu tràn */
 }
+
+/* Cuả Phần Đăng Nhập */
+.login-box {
+    max-width: 430px; /* Giới hạn chiều rộng */
+    margin: 100px auto; /* Canh giữa */
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Đổ bóng */
+}
