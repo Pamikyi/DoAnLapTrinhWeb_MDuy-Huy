@@ -58,3 +58,36 @@ document.getElementById("loginForm").addEventListener("submit", function (event)
         document.getElementById("error").classList.remove("d-none");
     }
 });
+
+// Cart
+ function formatCurrency(num) {
+   return num.toLocaleString('vi-VN') + ' ₫';
+ }
+
+ function updateCart() {
+   let rows = document.querySelectorAll("#cartTable tbody tr");
+   let grandTotal = 0;
+
+   rows.forEach(row => {
+     let price = parseInt(row.querySelector(".price").getAttribute("data-val"));
+     let qty = parseInt(row.querySelector(".qty").value);
+     let total = price * qty;
+     row.querySelector(".total").textContent = formatCurrency(total);
+     grandTotal += total;
+   });
+
+   document.getElementById("grandTotal").textContent = formatCurrency(grandTotal);
+ }
+
+ document.querySelectorAll(".qty").forEach(input => {
+   input.addEventListener("change", updateCart);
+ });
+
+ document.querySelectorAll(".deleteBtn").forEach(btn => {
+   btn.addEventListener("click", function () {
+     this.closest("tr").remove();
+     updateCart();
+   });
+ });
+
+ updateCart();
