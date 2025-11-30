@@ -1,0 +1,68 @@
+﻿
+    <div class="container py-5">
+        <h2 class="text-center mb-4">Thông Tin Gửi Hàng</h2>
+
+        <form class="card p-4">
+            <!-- Người nhận -->
+            <h5 class="mb-3">Người Nhận</h5>
+            <div class="mb-3">
+                <label class="form-label required">Họ và tên người nhận</label>
+                <input type="text" class="form-control" placeholder="Ví dụ: Nguyễn Văn B" required>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label required">Số điện thoại</label>
+                    <input type="text" class="form-control" placeholder="0123 456 789" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Email (nếu có)</label>
+                    <input type="email" class="form-control" placeholder="abc@gmail.com">
+                </div>
+            </div>
+
+            <!-- Địa chỉ -->
+            <h5 class="mt-4 mb-3">Địa Chỉ Nhận Hàng</h5>
+
+            <div class="mb-3">
+                <label class="form-label required">Địa chỉ</label>
+                <input type="text" class="form-control" placeholder="Số nhà, tên đường..." required>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label class="form-label required">Tỉnh/Thành phố</label>
+                    <select class="form-select" required>
+                        <option value="">Chọn tỉnh/thành</option>
+                        <option>TP. Hồ Chí Minh</option>
+                        <option>Hà Nội</option>
+                        <option>Đà Nẵng</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label class="form-label required">Quận/Huyện</label>
+                    <input type="text" class="form-control" placeholder="Quận, huyện" required>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label class="form-label required">Phường/Xã</label>
+                    <input type="text" class="form-control" placeholder="Phường, xã" required>
+                </div>
+            </div>
+
+            <!-- Ghi chú -->
+            <div class="mb-3">
+                <label class="form-label">Ghi chú giao hàng</label>
+                <textarea rows="3" class="form-control" placeholder="Ví dụ: Gọi trước khi giao"></textarea>
+            </div>
+
+            <!-- Hành động -->
+            <div class="d-flex justify-content-between mt-3">
+                <a href="cart.html" class="btn btn-secondary px-4">← Quay lại giỏ hàng</a>
+                <button type="submit" class="btn btn-primary px-4">Xác nhận & Gửi đơn</button>
+            </div>
+
+        </form>
+    </div>

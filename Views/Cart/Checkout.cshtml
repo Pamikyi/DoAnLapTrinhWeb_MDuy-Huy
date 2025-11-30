@@ -1,0 +1,73 @@
+@model List<CartItem>
+
+<div class="container my-5">
+
+    <h2 class="mb-4">Thanh toán</h2>
+
+    <form method="post" asp-action="Checkout">
+
+        <div class="row">
+            <!-- LEFT: Shipping info -->
+            <div class="col-md-6">
+                <div class="card p-4 shadow-sm">
+                    <h4 class="mb-3">Thông tin giao hàng</h4>
+
+                    <div class="mb-3">
+                        <label class="form-label">Tên người nhận</label>
+                        <input type="text" name="ReceiverName" class="form-control" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Số điện thoại</label>
+                        <input type="text" name="Phone" class="form-control" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Địa chỉ giao hàng</label>
+                        <textarea name="ShippingAddress" class="form-control" rows="3" required></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Yêu cầu khác</label>
+                        <textarea name="Request" class="form-control" rows="2"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-success btn-lg">
+                        Xác nhận đơn hàng
+                    </button>
+                </div>
+            </div>
+
+            <!-- RIGHT: Cart Overview -->
+            <div class="col-md-6">
+                <div class="card p-4 shadow-sm">
+                    <h4 class="mb-3">Đơn hàng của bạn</h4>
+
+                    <ul class="list-group mb-3">
+                        @foreach (var item in Model)
+                        {
+                            <li class="list-group-item d-flex justify-content-between">
+                                <div>
+                                    <strong>@item.Name</strong><br />
+                                    <small>x @item.Quantity</small>
+                                </div>
+                                <span class="fw-bold text-danger">@((item.Price * item.Quantity).ToString("N0")) ₫</span>
+                            </li>
+                        }
+                    </ul>
+
+                    @{
+                        var total = Model.Sum(x => x.Price * x.Quantity);
+                    }
+
+                    <div class="text-end">
+                        <h4>Tổng cộng: <span class="text-danger">@total.ToString("N0") ₫</span></h4>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+
+</div>

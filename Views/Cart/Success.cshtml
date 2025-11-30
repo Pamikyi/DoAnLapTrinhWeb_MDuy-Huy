@@ -1,0 +1,14 @@
+@model CustomerOrder
+
+<div class="container text-center my-5">
+
+    <h2 class="text-success fw-bold">🎉 Đặt hàng thành công!</h2>
+
+    <p class="lead">
+        Mã đơn hàng của bạn: <strong>#@Model.CustomerOrdersID</strong>
+    </p>
+
+    <p>Trạng thái: <strong>@Model.Status</strong></p>
+
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary mt-3">Về trang chủ</a>
+</div>

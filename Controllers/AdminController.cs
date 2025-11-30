@@ -65,6 +65,9 @@ namespace DoAnLapTrinhWeb.Controllers
         {
             return RedirectToAction("Details", "Contacts", new { id });
         }
-
+        public IActionResult Index()
+        {
+            return View("Index", "Admin");
+        }
     }
 }
