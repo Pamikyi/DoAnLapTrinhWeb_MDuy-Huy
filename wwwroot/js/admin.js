@@ -5,8 +5,9 @@ const logoutBtn = document.getElementById("logout");
 const mainContent = document.getElementById("mainContent");
 
 // Toggle sidebar
-sidebarToggle?.addEventListener("click", () => {
+sidebarToggle.addEventListener("click", () => {
     sidebar.classList.toggle("d-none");
+    mainContent.classList.toggle("full-width");
 });
 
 // Logout
@@ -28,8 +29,11 @@ document.querySelectorAll(".sidebar .nav-link").forEach((link) => {
 
         document.querySelectorAll(".sidebar .nav-link")
             .forEach((l) => l.classList.remove("active"));
-
         link.classList.add("active");
+
+        
+
+        if (pageId === "products") loadProducts();
     });
 });
 
@@ -49,4 +53,43 @@ if (ctx) {
             ],
         },
     });
+}
+
+function loadPage(page) {
+    $("#mainContent").load(`/Admin/${page}`);
+}
+
+function loadProducts() {
+    fetch("/Admin/Products")
+        .then(res => res.json())
+        .then(data => {
+
+            let html = "";
+            let i = 1;
+
+            data.forEach(p => {
+                html += `
+                <tr>
+                    <td>${i++}</td>
+                    <td>${p.productName}</td>
+                    <td>${p.categoryName}</td>
+                    <td>${p.price.toLocaleString()} ₫</td>
+                    <td>
+                        ${p.isAvailable 
+                            ? '<span class="badge bg-success">Còn</span>'
+                            : '<span class="badge bg-secondary">Hết</span>'}
+                    </td>
+                    <td>
+                        <a href="/Products/Edit/${p.productID}" class="btn btn-warning btn-sm">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a href="/Products/Delete/${p.productID}" class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>`;
+            });
+
+            document.getElementById("productTable").innerHTML = html;
+        });
 }

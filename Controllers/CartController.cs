@@ -1,4 +1,5 @@
 ﻿using DoAnLapTrinhWebBanThucAnNhanh.Models;
+using DoAnLapTrinhWebBanThucAnNhanh.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 public class CartController : Controller
@@ -121,9 +122,26 @@ public class CartController : Controller
         return RedirectToAction("Success", new { id = order.CustomerOrdersID });
     }
     public IActionResult Success(int id)
-{
-    var order = _context.CustomerOrders.FirstOrDefault(o => o.CustomerOrdersID == id);
-    return View(order);
-}
+    {
+        var order = _context.CustomerOrders.FirstOrDefault(o => o.CustomerOrdersID == id);
+        return View(order);
+    }
+    // ------- HIỂN THỊ TRANG CHECKOUT -------
+    [HttpGet]
+    public IActionResult Checkout()
+    {
+        var cart = HttpContext.Session.GetObject<List<CartItem>>("Cart")
+                   ?? new List<CartItem>();
 
+        if (!cart.Any())
+            return RedirectToAction("Index");
+
+        var vm = new CheckoutViewModel
+        {
+            CartItems = cart,
+            TotalAmount = cart.Sum(x => x.Price * x.Quantity)
+        };
+
+        return View(vm);
+    }
 }

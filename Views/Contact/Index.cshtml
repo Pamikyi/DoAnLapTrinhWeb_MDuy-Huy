@@ -1,0 +1,74 @@
+@model DoAnLapTrinhWebBanThucAnNhanh.Models.Contact
+
+<div class="container my-5">
+
+    <h2 class="mb-4 text-primary">Liên hệ với chúng tôi</h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    <div class="row">
+
+        <!-- Form -->
+        <div class="col-md-6">
+            <div class="card p-4 shadow-sm">
+
+                <h4 class="mb-3">Gửi phản hồi</h4>
+
+                <form method="post">
+
+                    <div class="mb-3">
+                        <label class="form-label">Họ và tên</label>
+                        <input asp-for="Fullname" class="form-control" />
+                        <span asp-validation-for="Fullname" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Nội dung phản hồi</label>
+                        <textarea asp-for="MessageContent" rows="4" class="form-control"></textarea>
+                        <span asp-validation-for="MessageContent" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        Gửi liên hệ
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
+
+        <!-- Info -->
+        <div class="col-md-6">
+            <div class="card p-4 shadow-sm">
+                <h4>Thông tin cửa hàng</h4>
+
+                <p><strong>Địa chỉ:</strong> TP. Hồ Chí Minh</p>
+                <p><strong>Số điện thoại:</strong> 056 4705 149</p>
+                <p><strong>Email:</strong> support@vietfood.vn</p>
+
+                <hr />
+
+                <h5>Bản đồ</h5>
+                <div class="ratio ratio-16x9">
+                    <iframe src="https://maps.google.com/maps?q=Ho%20Chi%20Minh&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                            style="border:0;" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

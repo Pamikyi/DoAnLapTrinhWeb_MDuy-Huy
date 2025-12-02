@@ -1,0 +1,50 @@
+@model List<DoAnLapTrinhWebBanThucAnNhanh.Models.Product>
+
+<h2>Quản lý Sản phẩm</h2>
+
+<button class="btn btn-primary mb-2" onclick="redirectToAddProduct()">
+    <i class="bi bi-plus-lg"></i> Thêm sản phẩm
+</button>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Tên SP</th>
+            <th>Danh mục</th>
+            <th>Giá</th>
+            <th>Trạng thái</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProductID</td>
+                <td>@item.ProductName</td>
+                <td>@item.Category?.CategoryName</td>
+                <td>@item.Price.ToString("N0") ₫</td>
+                <td>
+                    @if (item.IsAvailable)
+                    {
+                        <span class="badge bg-success">Còn</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Hết</span>
+                    }
+                </td>
+                <td>
+                    <a href="/Products/Edit/@item.ProductID" class="btn btn-warning btn-sm">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    <a href="/Products/Delete/@item.ProductID" class="btn btn-danger btn-sm">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

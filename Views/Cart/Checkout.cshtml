@@ -1,73 +1,95 @@
-@model List<CartItem>
+@model DoAnLapTrinhWebBanThucAnNhanh.Models.ViewModels.CheckoutViewModel
 
 <div class="container my-5">
 
-    <h2 class="mb-4">Thanh toán</h2>
+    <h2 class="mb-4 text-primary">Thanh toán</h2>
 
-    <form method="post" asp-action="Checkout">
+    <div class="row">
+        <!-- FORM -->
+        <div class="col-lg-7">
 
-        <div class="row">
-            <!-- LEFT: Shipping info -->
-            <div class="col-md-6">
-                <div class="card p-4 shadow-sm">
-                    <h4 class="mb-3">Thông tin giao hàng</h4>
+            <div class="card border-primary mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="m-0">Thông tin giao hàng</h5>
+                </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Tên người nhận</label>
-                        <input type="text" name="ReceiverName" class="form-control" required />
-                    </div>
+                <div class="card-body">
 
-                    <div class="mb-3">
-                        <label class="form-label">Số điện thoại</label>
-                        <input type="text" name="Phone" class="form-control" required />
-                    </div>
+                    <form asp-action="Checkout" method="post">
 
-                    <div class="mb-3">
-                        <label class="form-label">Địa chỉ giao hàng</label>
-                        <textarea name="ShippingAddress" class="form-control" rows="3" required></textarea>
-                    </div>
+                        <div class="mb-3">
+                            <label class="form-label">Họ và tên</label>
+                            <input asp-for="ReceiverName" class="form-control" required />
+                            <span class="text-danger" asp-validation-for="ReceiverName"></span>
+                        </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Yêu cầu khác</label>
-                        <textarea name="Request" class="form-control" rows="2"></textarea>
-                    </div>
+                        <div class="mb-3">
+                            <label class="form-label">Số điện thoại</label>
+                            <input asp-for="Phone" class="form-control" required />
+                            <span class="text-danger" asp-validation-for="Phone"></span>
+                        </div>
 
-                    <button type="submit" class="btn btn-success btn-lg">
-                        Xác nhận đơn hàng
-                    </button>
+                        <div class="mb-3">
+                            <label class="form-label">Địa chỉ giao hàng</label>
+                            <textarea asp-for="ShippingAddress" class="form-control" rows="3" required></textarea>
+                            <span class="text-danger" asp-validation-for="ShippingAddress"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Ghi chú (tuỳ chọn)</label>
+                            <textarea asp-for="Request" class="form-control" rows="2"></textarea>
+                        </div>
+
+                        <button class="btn btn-success btn-lg px-4">
+                            Xác nhận thanh toán
+                        </button>
+
+                    </form>
+
                 </div>
             </div>
+        </div>
 
-            <!-- RIGHT: Cart Overview -->
-            <div class="col-md-6">
-                <div class="card p-4 shadow-sm">
-                    <h4 class="mb-3">Đơn hàng của bạn</h4>
+        <!-- CART SUMMARY -->
+        <div class="col-lg-5">
 
-                    <ul class="list-group mb-3">
-                        @foreach (var item in Model)
-                        {
-                            <li class="list-group-item d-flex justify-content-between">
-                                <div>
-                                    <strong>@item.Name</strong><br />
-                                    <small>x @item.Quantity</small>
-                                </div>
-                                <span class="fw-bold text-danger">@((item.Price * item.Quantity).ToString("N0")) ₫</span>
-                            </li>
-                        }
-                    </ul>
+            <div class="card border-success">
+                <div class="card-header bg-success text-white">
+                    <h5 class="m-0">Đơn hàng của bạn</h5>
+                </div>
 
-                    @{
-                        var total = Model.Sum(x => x.Price * x.Quantity);
+                <div class="card-body">
+
+                    @foreach (var item in Model.CartItems)
+                    {
+                        <div class="d-flex justify-content-between mb-2">
+                            <div>
+                                <strong>@item.Name</strong>
+                                <div class="text-muted small">x @item.Quantity</div>
+                            </div>
+
+                            <div class="fw-bold text-danger">
+                                @((item.Price * item.Quantity).ToString("N0")) ₫
+                            </div>
+                        </div>
+
+                        <hr />
                     }
 
-                    <div class="text-end">
-                        <h4>Tổng cộng: <span class="text-danger">@total.ToString("N0") ₫</span></h4>
+                    <div class="d-flex justify-content-between">
+                        <h5 class="fw-bold">Tổng cộng:</h5>
+                        <h5 class="text-danger fw-bold">
+                            @Model.TotalAmount.ToString("N0") ₫
+                        </h5>
                     </div>
+
                 </div>
             </div>
 
         </div>
-
-    </form>
-
+    </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,73 @@
+@model DoAnLapTrinhWebBanThucAnNhanh.Models.UserHL
+
+<div class="container my-5">
+
+    <h2 class="text-primary mb-4">Thông tin cá nhân</h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    <div class="row">
+
+        <!-- Ảnh avatar -->
+        <div class="col-md-3 text-center">
+            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                 class="rounded-circle mb-3 shadow"
+                 style="width: 150px; height: 150px; object-fit: cover;" />
+
+            <h5 class="fw-bold mt-2">@Model.Username</h5>
+
+            <p class="text-muted">
+                Vai trò:
+                <span class="badge bg-primary">
+                    @Model.Role?.RoleName
+                </span>
+            </p>
+        </div>
+
+        <!-- Form thông tin -->
+        <div class="col-md-9">
+            <div class="card p-4 shadow-sm">
+
+                <form method="post">
+
+                    <input type="hidden" name="UserID" value="@Model.UserID" />
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Tên đăng nhập</label>
+                            <input name="Username" value="@Model.Username" class="form-control" required />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Email</label>
+                            <input name="Email" type="email" value="@Model.Email" class="form-control" required />
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Số điện thoại</label>
+                            <input name="PhoneNumber" value="@Model.PhoneNumber" class="form-control" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Quyền</label>
+                            <input value="@Model.Role?.RoleName" class="form-control" disabled />
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-success">
+                        Cập nhật thông tin
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,74 @@
+@model DoAnLapTrinhWebBanThucAnNhanh.Models.ViewModels.DashboardViewModel
+
+<div class="main-content" id="mainContent">
+    <div id="dashboard" class="page">
+
+        <h2>Dashboard</h2>
+
+        <div class="row g-3 mt-3">
+
+            <!-- SẢN PHẨM -->
+            <div class="col-md-3">
+                <div class="card p-3 bg-primary text-white shadow-sm">
+                    <h3>@Model.TotalProducts</h3>
+                    <p>Sản phẩm</p>
+                </div>
+            </div>
+
+            <!-- ĐƠN HÀNG -->
+            <div class="col-md-3">
+                <div class="card p-3 bg-success text-white shadow-sm">
+                    <h3>@Model.TotalOrders</h3>
+                    <p>Đơn hàng</p>
+                </div>
+            </div>
+
+            <!-- NGƯỜI DÙNG -->
+            <div class="col-md-3">
+                <div class="card p-3 bg-warning text-white shadow-sm">
+                    <h3>@Model.TotalUsers</h3>
+                    <p>Người dùng</p>
+                </div>
+            </div>
+
+            <!-- DOANH THU -->
+            <div class="col-md-3">
+                <div class="card p-3 bg-danger text-white shadow-sm">
+                    <h4>@Model.TotalRevenue.ToString("N0") ₫</h4>
+                    <p>Doanh thu</p>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="card mt-4 p-3 shadow-sm">
+            <h5>Biểu đồ doanh thu theo tháng</h5>
+            <canvas id="chartRevenue"></canvas>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const ctx = document.getElementById("chartRevenue");
+
+        new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Labels)),
+                datasets: [{
+                    label: "Doanh thu (VNĐ)",
+                    data: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Data)),
+                    borderWidth: 2,
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    backgroundColor: "rgba(75, 192, 192, 0.2)",
+                    tension: 0.3
+                }]
+            }
+        });
+    </script>
+}
