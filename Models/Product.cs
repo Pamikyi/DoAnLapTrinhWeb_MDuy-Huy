@@ -41,7 +41,7 @@ namespace DoAnLapTrinhWebBanThucAnNhanh.Models
 
         [Display(Name = "Món tuổi thơ")]
         public bool IsChildhoodDish { get; set; }
-
+    
         [Display(Name = "Ngày tạo")]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 

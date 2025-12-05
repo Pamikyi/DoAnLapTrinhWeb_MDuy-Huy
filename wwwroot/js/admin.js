@@ -15,28 +15,6 @@ logoutBtn?.addEventListener("click", () => {
     alert("Đăng xuất thành công !");
 });
 
-// SPA navigation
-document.querySelectorAll(".sidebar .nav-link").forEach((link) => {
-    link.addEventListener("click", (e) => {
-        e.preventDefault();
-
-        const pageId = link.dataset.page;
-
-        document.querySelectorAll(".page")
-            .forEach((p) => (p.style.display = "none"));
-
-        document.getElementById(pageId).style.display = "block";
-
-        document.querySelectorAll(".sidebar .nav-link")
-            .forEach((l) => l.classList.remove("active"));
-        link.classList.add("active");
-
-        
-
-        if (pageId === "products") loadProducts();
-    });
-});
-
 // Chart Dashboard
 const ctx = document.getElementById("chartRevenue");
 if (ctx) {
@@ -53,10 +31,6 @@ if (ctx) {
             ],
         },
     });
-}
-
-function loadPage(page) {
-    $("#mainContent").load(`/Admin/${page}`);
 }
 
 function loadProducts() {
