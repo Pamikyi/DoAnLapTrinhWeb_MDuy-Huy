@@ -1,0 +1,48 @@
+@model List<DoAnLapTrinhWebBanThucAnNhanh.Models.OrderDetail>
+
+<h2>Chi tiết đơn hàng #@ViewBag.OrderID</h2>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Sản phẩm</th>
+            <th>Đơn giá</th>
+            <th>Số lượng</th>
+            <th>Thành tiền</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="5" class="text-center">Không có sản phẩm</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.OrderDetailID</td>
+                    <td>@item.Product?.ProductName</td>
+                    <td>@item.UnitPrice.ToString("N0") ₫</td>
+                    <td>@item.Quantity</td>
+                    <td>@((item.UnitPrice * item.Quantity).ToString("N0")) ₫</td>
+                </tr>
+            }
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="4" class="text-end">Tổng cộng</th>
+            <th>@ViewBag.Total.ToString("N0") ₫</th>
+        </tr>
+    </tfoot>
+</table>
+
+<a asp-controller="Orders"
+   asp-action="Index"
+   class="btn btn-secondary">
+    ← Quay lại đơn hàng
+</a>
