@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @model List<DoAnLapTrinhWebBanThucAnNhanh.Models.Category>
 
 <div id="categories" class="page" style="display:none;">
@@ -50,3 +51,53 @@
     </div>
 
 </div>
+=======
+@model List<DoAnLapTrinhWebBanThucAnNhanh.Models.Category>
+
+<h2>Quản lý Danh mục</h2>
+
+<button class="btn btn-primary mb-2" onclick="redirectToAddCategory()">
+    <i class="bi bi-plus-lg"></i> Thêm danh mục
+</button>
+
+<table class="table table-bordered table-hover main-content">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Tên danh mục</th>
+            <th>Số lượng món</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.CategoryID</td>
+                <td>@item.CategoryName</td>
+                <td>@(item.Products?.Count() ?? 0)</td>
+
+                <td>
+                    <a href="/Categories/Edit/@item.CategoryID"
+                       class="btn btn-warning btn-sm">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+
+                    <a href="/Categories/Delete/@item.CategoryID"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('Bạn có chắc muốn xoá danh mục này?');">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    function redirectToAddCategory() {
+        window.location.href = "/Categories/Create";
+    }
+</script>
+>>>>>>> 1b9a1cc19799d4c47eeafba026071668cb0f6d52

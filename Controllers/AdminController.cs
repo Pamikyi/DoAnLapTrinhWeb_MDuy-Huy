@@ -79,6 +79,7 @@ namespace DoAnLapTrinhWeb.Controllers
             return PartialView("_Products", data);
         }
 
+<<<<<<< HEAD
         // ---------------------------------------------------
         // 4) CATEGORY LIST — PartialView
         // ---------------------------------------------------
@@ -88,6 +89,17 @@ namespace DoAnLapTrinhWeb.Controllers
             var data = _context.Categories.AsNoTracking().ToList();
             return PartialView("_Categories", data);
         }
+=======
+          public IActionResult CategoryList()
+  {
+      var data = _context.Categories
+          .AsNoTracking()
+          .Include(c => c.Products)   // Quan trọng để đếm món
+          .ToList();
+
+      return PartialView("_Categories", data);
+  }
+>>>>>>> 1b9a1cc19799d4c47eeafba026071668cb0f6d52
 
         // ---------------------------------------------------
         // 5) ORDERS LIST — PartialView
@@ -280,3 +292,4 @@ namespace DoAnLapTrinhWeb.Controllers
         }
     }
 }
+

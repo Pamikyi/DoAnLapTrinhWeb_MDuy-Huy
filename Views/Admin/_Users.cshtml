@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @model List<DoAnLapTrinhWebBanThucAnNhanh.Models.UserHL>
 <div id="users" class="page" style="display:none;">
 
@@ -54,3 +55,51 @@
     </div>
 
 </div>
+=======
+@model List<DoAnLapTrinhWebBanThucAnNhanh.Models.UserHL>
+
+<h2>Quản lý Người dùng</h2>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Tên đăng nhập</th>
+            <th>Email</th>
+            <th>SĐT</th>
+            <th>Quyền</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model == null || !Model.Any())
+        {
+            <tr>
+                <td colspan="6" class="text-center">Chưa có người dùng</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.UserID</td>
+                    <td>@item.Username</td>
+                    <td>@item.Email</td>
+                    <td>@item.PhoneNumber</td>
+                    <td>@item.Role?.RoleName</td>
+                    <td>
+                        <a asp-controller="UserHL"
+                           asp-action="Delete"
+                           asp-route-id="@item.UserID"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Xoá người dùng này?');">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+>>>>>>> 1b9a1cc19799d4c47eeafba026071668cb0f6d52
