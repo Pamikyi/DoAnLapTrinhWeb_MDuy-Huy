@@ -72,11 +72,15 @@ namespace DoAnLapTrinhWeb.Controllers
             return PartialView("_Products", data);
         }
 
-        public IActionResult CategoryList()
-        {
-            var data = _context.Categories.AsNoTracking().ToList();
-            return PartialView("_Categories", data);
-        }
+          public IActionResult CategoryList()
+  {
+      var data = _context.Categories
+          .AsNoTracking()
+          .Include(c => c.Products)   // Quan trọng để đếm món
+          .ToList();
+
+      return PartialView("_Categories", data);
+  }
 
         public IActionResult OrderList()
         {
@@ -108,3 +112,4 @@ namespace DoAnLapTrinhWeb.Controllers
         }
     }
 }
+
