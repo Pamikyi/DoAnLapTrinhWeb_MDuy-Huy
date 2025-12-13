@@ -1,28 +1,88 @@
 .container {
-    width: 100%;
-    max-width: 1200px; 
-    margin: 0 auto;
-    box-sizing: border-box;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
-body { overflow-x: hidden; }
+body {
+  overflow-x: hidden;
+}
+
 .sidebar {
-    width: 220px; height: 100vh; position: fixed; background: #343a40; padding-top: 60px; color: white; left: 0;
+    width: 220px;
+    position: fixed;
+    left: 0;
+    height: 100vh;
+    background: #2e3b4e;
+    padding-top: 20px;
 }
-.sidebar a { color: #ddd; padding: 10px; display: flex; text-decoration: none; }
-.sidebar a:hover, .sidebar a.active { background: #495057; color: #fff; }
-.top-navbar { position: fixed; left: 220px; width: calc(100% - 220px); z-index: 1000; }
-.main-content { margin-left: 95px; padding: 70px 20px 20px 20px; min-height: 100vh; transition: all 0.4s; }
 
-.main-content.full-width { margin-left: 0 !important; }
-.card { border-radius: 0.5rem; }.sidebar.hidden { margin-left: -290px; transition: all 0.4s; }
-.nav-tabs .nav-link.active {
-  color: var(
-    --bs-primary-text-emphasis
-  ) !important; /* đổi màu chữ khi active */
-  background-color: var(--bs-light) !important; /* giữ nền sáng */
-  border-color: var(--bs-primary) !important; /* viền theo màu chủ đạo */
+.sidebar a {
+  color: #ddd;
+  padding: 10px;
+  display: flex;
+  text-decoration: none;
 }
+
+.sidebar a:hover,
+.sidebar a.active {
+  background: #495057;
+  color: #fff;
+}
+
+.top-navbar {
+  position: fixed;
+  left: 220px;
+  width: calc(100% - 220px);
+  z-index: 1000;
+}
+
+
+/* MAIN CONTENT */
+.main-content {
+    margin-left: 220px;
+    padding: 90px 20px 20px 20px;
+    transition: all 0.3s ease;
+    min-height: 100vh;
+}
+
+/* Khi sidebar ẩn */
+.main-content.full-width {
+    margin-left: 0 !important;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    background: #2e3b4e;
+    padding-top: 20px;
+    transition: all 0.3s ease;
+}
+
+.sidebar.hidden {
+    margin-left: -220px;
+}
+
+.card {
+  border-radius: 0.5rem;
+}
+
+
+
+.nav-tabs .nav-link.active {
+  color: var(--bs-primary-text-emphasis) !important;
+  /* đổi màu chữ khi active */
+  background-color: var(--bs-light) !important;
+  /* giữ nền sáng */
+  border-color: var(--bs-primary) !important;
+  /* viền theo màu chủ đạo */
+}
+
 .product-row {
   display: flex;
   gap: 1rem;
@@ -30,6 +90,7 @@ body { overflow-x: hidden; }
   scroll-snap-type: x mandatory;
   padding-bottom: 1rem;
 }
+
 .product-row::-webkit-scrollbar {
   height: 8px;
 }
@@ -38,15 +99,19 @@ body { overflow-x: hidden; }
   background-color: #dc35b0;
   border-radius: 4px;
 }
+
 .product-card {
   flex: 0 0 auto;
-  width: 260px; /* kích thước card cố định cho cuộn ngang */
+  width: 260px;
+  /* kích thước card cố định cho cuộn ngang */
   scroll-snap-align: start;
 }
+
 .card-img-top {
   object-fit: cover;
   height: 180px;
 }
+
 .btn-group-custom {
   display: flex;
   justify-content: space-between;
@@ -54,55 +119,100 @@ body { overflow-x: hidden; }
 }
 
 .card .btn {
-  padding: 0.25rem 0.5rem; /* giảm padding */
-  font-size: 0.875rem;     /* chữ nhỏ hơn */
+  padding: 0.25rem 0.5rem;
+  /* giảm padding */
+  font-size: 0.875rem;
+  /* chữ nhỏ hơn */
   border-radius: 0.5rem;
   letter-spacing: 0.2px;
 }
 
 .pagination {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto; /* để có thể kéo ngang nếu tràn */
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  /* để có thể kéo ngang nếu tràn */
 }
 
 /* Cuả Phần Đăng Nhập */
 .login-box {
-    max-width: 430px; /* Giới hạn chiều rộng */
-    margin: 100px auto; /* Canh giữa */
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Đổ bóng */
+  max-width: 430px;
+  /* Giới hạn chiều rộng */
+  margin: 100px auto;
+  /* Canh giữa */
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  /* Đổ bóng */
 }
+
 .cart {
-    position: relative;
-    display: inline-block;
-    margin-right: 20px;
+  position: relative;
+  display: inline-block;
+  margin-right: 20px;
 }
+
 .cart-count {
-    position: absolute;
-    top: -5px;
-    right: -10px;
-    background: red;
-    color: white;
-    padding: 2px 7px;
-    border-radius: 50%;
-    font-size: 12px;
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background: red;
+  color: white;
+  padding: 2px 7px;
+  border-radius: 50%;
+  font-size: 12px;
 }
+
 .cart-bounce {
-    animation: bounce 0.3s ease;
+  animation: bounce 0.3s ease;
 }
 
 @keyframes bounce {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.4); }
-    100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.4);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 .fixed-top {
   position: fixed;
-  top: 10 !important; 
+  top: 10 !important;
   right: 0;
   left: 0;
   z-index: 1030;
+}
+
+/* ================================
+   GLASS TABLE (TRANSPARENT)
+   ================================ */
+.glass-table {
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* header */
+.glass-table thead {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(6px);
+}
+
+/* body rows */
+.glass-table tbody tr {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(4px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* hover vẫn thấy gradient */
+.glass-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.18);
 }

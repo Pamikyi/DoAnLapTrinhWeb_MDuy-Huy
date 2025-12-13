@@ -11,7 +11,7 @@
 
     <div class="row">
 
-        <!-- Ảnh avatar -->
+        <!-- AVATAR -->
         <div class="col-md-3 text-center">
             <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
                  class="rounded-circle mb-3 shadow"
@@ -27,39 +27,62 @@
             </p>
         </div>
 
-        <!-- Form thông tin -->
+        <!-- FORM -->
         <div class="col-md-9">
             <div class="card p-4 shadow-sm">
 
-                <form method="post">
+                <form method="post" action="/Profile/update">
 
                     <input type="hidden" name="UserID" value="@Model.UserID" />
 
                     <div class="row mb-3">
+
                         <div class="col-md-6">
                             <label class="form-label">Tên đăng nhập</label>
-                            <input name="Username" value="@Model.Username" class="form-control" required />
+                            <input name="Username"
+                                   value="@Model.Username"
+                                   class="form-control"
+                                   required />
                         </div>
 
                         <div class="col-md-6">
                             <label class="form-label">Email</label>
-                            <input name="Email" type="email" value="@Model.Email" class="form-control" required />
+                            <input name="Email"
+                                   type="email"
+                                   value="@Model.Email"
+                                   class="form-control"
+                                   required />
                         </div>
                     </div>
 
                     <div class="row mb-3">
+
                         <div class="col-md-6">
                             <label class="form-label">Số điện thoại</label>
-                            <input name="PhoneNumber" value="@Model.PhoneNumber" class="form-control" />
+                            <input name="PhoneNumber"
+                                   value="@Model.PhoneNumber"
+                                   class="form-control" />
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label">Quyền</label>
-                            <input value="@Model.Role?.RoleName" class="form-control" disabled />
+                            <label class="form-label">Địa chỉ</label>
+                            <input name="Address"
+                                   value="@Model.Address"
+                                   class="form-control" />
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-success">
+                    <!-- MẬT KHẨU — vì bạn nói không dùng nên mình để readonly -->
+                    <div class="mb-3">
+                        <label class="form-label">Mật khẩu (ẩn)</label>
+                        <input type="password"
+                               value="************"
+                               class="form-control"
+                               readonly />
+                        <small class="text-muted">Không hỗ trợ đổi mật khẩu tại đây.</small>
+                    </div>
+
+                    <button class="btn btn-success">
                         Cập nhật thông tin
                     </button>
 

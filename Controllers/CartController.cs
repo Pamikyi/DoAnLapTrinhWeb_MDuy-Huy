@@ -10,15 +10,20 @@ public class CartController : Controller
     {
         _context = context;
     }
-
     public IActionResult Add(int id)
     {
+        // Lấy cart từ Session hoặc tạo mới
         var cart = HttpContext.Session.GetObject<List<CartItem>>("Cart")
                    ?? new List<CartItem>();
 
-        var product = _context.Products.Find(id);
-        if (product == null) return NotFound();
+        // Lấy sản phẩm theo id
+        var product = _context.Products.FirstOrDefault(p => p.ProductID == id);
+        if (product == null)
+        {
+            return NotFound();
+        }
 
+        // Kiểm tra đã có trong giỏ chưa
         var existingItem = cart.FirstOrDefault(c => c.ProductID == id);
 
         if (existingItem == null)
@@ -37,10 +42,14 @@ public class CartController : Controller
             existingItem.Quantity++;
         }
 
+        // Lưu session
         HttpContext.Session.SetObject("Cart", cart);
 
-        return Redirect(Request.Headers["Referer"].ToString());
+        // 👉 Chuyển thẳng đến trang giỏ hàng
+        return RedirectToAction("Index", "Cart");
     }
+
+
 
     public IActionResult Index()
     {
@@ -121,12 +130,15 @@ public class CartController : Controller
         // 4) Chuyển sang trang thành công
         return RedirectToAction("Success", new { id = order.CustomerOrdersID });
     }
+
+
     public IActionResult Success(int id)
     {
         var order = _context.CustomerOrders.FirstOrDefault(o => o.CustomerOrdersID == id);
         return View(order);
     }
     // ------- HIỂN THỊ TRANG CHECKOUT -------
+    [HttpGet]
     [HttpGet]
     public IActionResult Checkout()
     {
@@ -136,12 +148,43 @@ public class CartController : Controller
         if (!cart.Any())
             return RedirectToAction("Index");
 
+        // ---- Lấy user đang đăng nhập ----
+        int? userId = HttpContext.Session.GetInt32("UserID");
+        UserHL? user = null;
+
+        if (userId != null)
+        {
+            user = _context.UserHLs.FirstOrDefault(u => u.UserID == userId);
+        }
+
+        // ---- Tạo ViewModel & Auto fill dữ liệu ----
         var vm = new CheckoutViewModel
         {
             CartItems = cart,
-            TotalAmount = cart.Sum(x => x.Price * x.Quantity)
+            TotalAmount = cart.Sum(x => x.Price * x.Quantity),
+
+            ReceiverName = user?.Username ?? "",
+            Phone = user?.PhoneNumber ?? "",
+            ShippingAddress = user?.Address ?? ""   // nếu bạn có Address trong UserHL
         };
 
         return View(vm);
     }
+    // Cart remove
+    public IActionResult Remove(int id)
+    {
+        var cart = HttpContext.Session.GetObject<List<CartItem>>("Cart")
+                   ?? new List<CartItem>();
+
+        var item = cart.FirstOrDefault(x => x.ProductID == id);
+        if (item != null)
+        {
+            cart.Remove(item);
+        }
+
+        HttpContext.Session.SetObject("Cart", cart);
+
+        return RedirectToAction("Index");
+    }
+
 }

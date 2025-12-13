@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using DoAnLapTrinhWebBanThucAnNhanh.Models;
 
+[Route("User")]
 public class UserController : Controller
 {
     private readonly FastFoodDbContext _context;
@@ -10,6 +11,8 @@ public class UserController : Controller
         _context = context;
     }
 
+    // GET: /User/Profile
+    [HttpGet("Profile")]
     public IActionResult Profile()
     {
         int? userId = HttpContext.Session.GetInt32("UserID");
@@ -20,18 +23,18 @@ public class UserController : Controller
         return View(user);
     }
 
-    [HttpPost]
-    public IActionResult Profile(UserHL model)
+    // POST: /User/Profile/Update
+    [HttpPost("Profile/Update")]
+    public IActionResult UpdateProfile(UserHL model)
     {
         var user = _context.UserHLs.FirstOrDefault(u => u.UserID == model.UserID);
-
         if (user == null)
             return NotFound();
 
-        // Cập nhật thông tin cho user
+        user.Username = model.Username;
         user.Email = model.Email;
         user.PhoneNumber = model.PhoneNumber;
-        user.Username = model.Username;
+        user.Address = model.Address;
 
         _context.SaveChanges();
 

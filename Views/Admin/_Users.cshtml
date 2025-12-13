@@ -1,0 +1,56 @@
+@model List<DoAnLapTrinhWebBanThucAnNhanh.Models.UserHL>
+<div id="users" class="page" style="display:none;">
+
+    <h2>Quản lý Người dùng</h2>
+
+    <div class="card shadow-sm mt-3">
+        <div class="card-header bg-primary text-white">
+            <h5 class="m-0">Danh sách người dùng</h5>
+        </div>
+
+        <div class="card-body p-0">
+
+            <table class="table table-bordered table-hover m-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Tài khoản</th>
+                        <th>Email</th>
+                        <th>Số điện thoại</th>
+                        <th>Vai trò</th>
+                        <th width="120">Hành động</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var u in Model)
+                    {
+                        <tr>
+                            <td>@u.UserID</td>
+                            <td>@u.Username</td>
+                            <td>@u.Email</td>
+                            <td>@u.PhoneNumber</td>
+                            <td>
+                                <span class="badge bg-success">@u.Role?.RoleName</span>
+                            </td>
+
+                            <td class="text-center">
+                                <a href="/Users/Edit/@u.UserID" class="btn btn-warning btn-sm">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+
+                                <a href="/Users/Delete/@u.UserID"
+                                   class="btn btn-danger btn-sm"
+                                   onclick="return confirm('Xoá người dùng này?');">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+</div>

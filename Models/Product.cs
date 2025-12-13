@@ -20,7 +20,9 @@ namespace DoAnLapTrinhWebBanThucAnNhanh.Models
         [Display(Name = "Mô tả sản phẩm")]
         [StringLength(1000)]
         public string? Descriptions { get; set; }
+        [Display(Name = "Mô tả chi tiết")]
         public string? DetailDescription { get; set; }
+        [Display(Name = "Thành phần")]
         public string? Ingredients { get; set; }
 
         [Required(ErrorMessage = "Giá sản phẩm không được để trống")]
@@ -34,14 +36,17 @@ namespace DoAnLapTrinhWebBanThucAnNhanh.Models
         public string? ImageURL { get; set; }
 
         [Display(Name = "Sản phẩm bán chạy")]
-        public bool IsBestSeller { get; set; }
+        public bool IsBestSeller { get; set; } = false;
 
         [Display(Name = "Sản phẩm mới")]
-        public bool IsNew { get; set; }
+        public bool IsNew { get; set; } = false;
 
         [Display(Name = "Món tuổi thơ")]
-        public bool IsChildhoodDish { get; set; }
-    
+        public bool IsChildhoodDish { get; set; } = false;
+
+        [Display(Name = "Còn hàng")]
+        public bool IsAvailable { get; set; } = true;
+
         [Display(Name = "Ngày tạo")]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 

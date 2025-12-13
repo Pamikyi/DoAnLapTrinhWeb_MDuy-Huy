@@ -1,0 +1,97 @@
+@model DoAnLapTrinhWebBanThucAnNhanh.Models.Product
+@{ Layout = null; }
+
+<div class="container mt-4">
+    <h3 class="mb-3">➕ Thêm sản phẩm mới</h3>
+
+    <form onsubmit="return submitCreateProduct(this)"
+          enctype="multipart/form-data"
+          class="card p-4 shadow-sm">
+
+        @Html.AntiForgeryToken()
+
+        <div class="mb-3">
+            <label class="form-label">Tên sản phẩm</label>
+            <input asp-for="ProductName" class="form-control" required />
+            <span asp-validation-for="ProductName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Mô tả</label>
+            <textarea asp-for="Descriptions" class="form-control" rows="2"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Chi tiết</label>
+            <textarea asp-for="DetailDescription" class="form-control" rows="3"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Thành phần</label>
+            <textarea asp-for="Ingredients" class="form-control" rows="2"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Danh mục</label>
+            <select asp-for="CategoryID" class="form-select">
+                @foreach (var c in ViewBag.Categories)
+                {
+                    <option value="@c.CategoryID">@c.CategoryName</option>
+                }
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Giá</label>
+            <input asp-for="Price" class="form-control" type="number" min="0" required />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Bán chạy</label>
+            <select name="IsBestSeller" class="form-select">
+                <option value="false" selected>Không</option>
+                <option value="true">Có</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Sản phẩm mới</label>
+            <select name="IsNew" class="form-select">
+                <option value="false" selected>Không</option>
+                <option value="true">Có</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Món tuổi thơ</label>
+            <select name="IsChildhoodDish" class="form-select">
+                <option value="false" selected>Không</option>
+                <option value="true">Có</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Tình trạng</label>
+            <select asp-for="IsAvailable" class="form-select">
+                <option value="true">Còn hàng</option>
+                <option value="false">Hết hàng</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Ảnh sản phẩm</label>
+            <input type="file" name="imageFile" class="form-control" accept="image/*" />
+        </div>
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> Thêm sản phẩm
+            </button>
+
+            <button type="button" class="btn btn-secondary" onclick="loadPage('products')">
+                Quay lại
+            </button>
+        </div>
+    </form>
+</div>

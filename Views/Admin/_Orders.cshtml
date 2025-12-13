@@ -1,0 +1,60 @@
+@model List<DoAnLapTrinhWebBanThucAnNhanh.Models.CustomerOrder>
+
+<div id="orders" class="page" style="display:none;">
+
+    <h2>Quản lý Đơn hàng</h2>
+
+    <div class="card shadow-sm mt-3">
+        <div class="card-header bg-primary text-white">
+            <h5 class="m-0">Danh sách đơn hàng</h5>
+        </div>
+
+        <div class="card-body p-0">
+
+            <table class="table table-bordered table-hover m-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Mã đơn</th>
+                        <th>Khách hàng</th>
+                        <th>Ngày đặt</th>
+                        <th>Tổng tiền</th>
+                        <th>Trạng thái</th>
+                        <th width="120">Hành động</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        <tr>
+                            <td>@order.CustomerOrdersID</td>
+                            <td>@order.ReceiverName</td>
+                            <td>@order.OrderDate.ToString("dd/MM/yyyy")</td>
+                            <td>@order.TotalAmount.ToString("N0") ₫</td>
+
+                            <td>
+                                <span class="badge bg-info">@order.Status</span>
+                            </td>
+
+                            <td class="text-center">
+                                <a href="/Orders/Details/@order.CustomerOrdersID"
+                                   class="btn btn-primary btn-sm">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+
+                                <a href="/Orders/Delete/@order.CustomerOrdersID"
+                                   class="btn btn-danger btn-sm"
+                                   onclick="return confirm('Xoá đơn hàng này?');">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+</div>

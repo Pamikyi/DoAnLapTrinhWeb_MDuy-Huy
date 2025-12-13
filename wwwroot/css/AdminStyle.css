@@ -1,0 +1,54 @@
+/* BODY */
+body {
+  overflow-x: hidden;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 220px;
+    position: fixed;
+    left: 0;
+    margin-top: 50px;
+    height: 100vh;
+    background: #2e3b4e;
+    padding-top: 20px;
+    transition: all 0.3s ease;
+}
+
+.sidebar a {
+  color: #ddd;
+  padding: 10px;
+  display: flex;
+  text-decoration: none;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+  background: #495057;
+  color: #fff;
+}
+
+.sidebar.hidden {
+    margin-left: -220px;
+}
+
+/* MAIN CONTENT */
+.main-content {
+    margin-left: 220px;
+    padding: 90px 20px 20px 20px;
+    transition: all 0.3s ease;
+    min-height: 100vh;
+}
+
+.main-content.full-width {
+    margin-left: 0 !important;
+}
+
+/* FIXED TOP OVERRIDE */
+.fixed-top {
+  position: fixed;
+  top: 10 !important;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+}

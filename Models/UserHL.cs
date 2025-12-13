@@ -41,6 +41,10 @@ namespace DoAnLapTrinhWebBanThucAnNhanh.Models
         [Display(Name = "Vai trò")]
         public Role? Role { get; set; }
 
+        [StringLength(200)]
+        [Display(Name = "Địa chỉ")]
+        public string? Address { get; set; }
+
         // 1 User → nhiều Order
         public ICollection<CustomerOrder> CustomerOrders { get; set; } = new HashSet<CustomerOrder>();
 

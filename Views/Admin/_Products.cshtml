@@ -1,49 +1,56 @@
 @model List<DoAnLapTrinhWebBanThucAnNhanh.Models.Product>
 
-<h2>Quản lý Sản phẩm</h2>
+<form id="antiForgeryForm" style="display:none">
+    @Html.AntiForgeryToken()
+</form>
 
-<button class="btn btn-primary mb-2" onclick="redirectToAddProduct()">
-    <i class="bi bi-plus-lg"></i> Thêm sản phẩm
-</button>
+<div id="products" class="page">
+    <h2>Quản lý Sản phẩm</h2>
 
-<table class="table table-bordered table-hover main-content">
-    <thead class="table-dark">
-        <tr>
-            <th>#</th>
-            <th>Tên SP</th>
-            <th>Danh mục</th>
-            <th>Giá</th>
-            <th>Hành động</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.ProductID</td>
-                <td>@item.ProductName</td>
-                <td>@item.Category?.CategoryName</td>
-                <td>@item.Price.ToString("N0") ₫</td>
+    <button type="button" class="btn btn-success mb-3" onclick="openCreateProduct()">
+        ➕ Thêm sản phẩm
+    </button>
 
-                <td>
-                    <a href="/Products/Edit/@item.ProductID" 
-                       class="btn btn-warning btn-sm">
-                        <i class="bi bi-pencil"></i>
-                    </a>
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h5 class="m-0">Danh sách sản phẩm</h5>
+        </div>
 
-                    <a href="/Products/Delete/@item.ProductID" 
-                       class="btn btn-danger btn-sm"
-                       onclick="return confirm('Bạn có chắc muốn xoá sản phẩm này?');">
-                        <i class="bi bi-trash"></i>
-                    </a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+        <div class="card-body p-0">
+            <table class="table table-bordered table-hover m-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Số</th>
+                        <th>Tên SP</th>
+                        <th>Danh mục</th>
+                        <th>Giá</th>
+                        <th style="width: 120px;">Hành động</th>
+                    </tr>
+                </thead>
 
-<script>
-    function redirectToAddProduct() {
-        window.location.href = "/Products/Create";
-    }
-</script>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ProductID</td>
+                        <td>@item.ProductName</td>
+                        <td>@item.Category?.CategoryName</td>
+                        <td>@item.Price.ToString("N0") ₫</td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-warning btn-sm"
+                                    onclick="openEditProduct(@item.ProductID)">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+
+                            <button type="button" class="btn btn-danger btn-sm"
+                                    onclick="deleteProduct(@item.ProductID)">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

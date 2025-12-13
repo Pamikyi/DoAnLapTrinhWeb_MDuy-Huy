@@ -17,9 +17,6 @@ namespace DoAnLapTrinhWebBanThucAnNhanh.Controllers
             _context = context;
         }
 
-        /// <summary>
-        /// Trang chủ: Bán chạy, Món mới, Món tuổi thơ, Danh mục tất cả món
-        /// </summary>
         public async Task<IActionResult> Index()
         {
             var sanPhamBanChay = await _context.Products
@@ -42,7 +39,7 @@ namespace DoAnLapTrinhWebBanThucAnNhanh.Controllers
 
             var tatCaSanPham = await _context.Products
                 .OrderByDescending(s => s.CreatedAt)
-                .Take(12) // sau này có thể phân trang
+                .Take(12)
                 .ToListAsync();
 
             var model = new HomeIndexViewModel
@@ -56,7 +53,6 @@ namespace DoAnLapTrinhWebBanThucAnNhanh.Controllers
             return View(model);
         }
 
-        // Trang hiển thị tất cả sản phẩm (nếu cần riêng)
         public async Task<IActionResult> Products()
         {
             var sanPhams = await _context.Products

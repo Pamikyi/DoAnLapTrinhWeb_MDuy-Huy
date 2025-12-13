@@ -9,15 +9,15 @@
         return;
     }
 
-    <table class="table table-bordered mt-5">
-        <thead>
+    <table class="table table-hover align-middle glass-table ">
+        <thead class="table-primary">
             <tr>
                 <th>Ảnh</th>
                 <th>Sản phẩm</th>
-                <th>Giá</th>
-                <th>Số lượng</th>
-                <th>Tổng</th>
-                <th></th>
+                <th class="text-end">Giá</th>
+                <th class="text-center">Số lượng</th>
+                <th class="text-end">Tổng</th>
+                <th class="text-end"></th>
             </tr>
         </thead>
 
@@ -27,44 +27,40 @@
                 <tr>
                     <!-- IMAGE -->
                     <td>
-                        <img src="@item.Image"
-                             width="60"
-                             class="rounded"
-                             style="object-fit: cover;" />
+                        <img src="@item.Image" width="60" height="60" class="rounded" style="object-fit: cover;" />
                     </td>
 
                     <!-- NAME -->
-                    <td>@item.Name</td>
+                    <td class="fw-semibold">@item.Name</td>
 
                     <!-- PRICE -->
-                    <td>@item.Price.ToString("N0") ₫</td>
+                    <td class="text-end">
+                        @item.Price.ToString("N0") ₫
+                    </td>
 
                     <!-- QUANTITY -->
-                    <td>
-                        <input type="number"
-                               min="1"
-                               value="@item.Quantity"
-                               onchange="updateQuantity(@item.ProductID, this.value)"
-                               class="form-control form-control-sm text-center"
-                               style="width: 70px;">
+                    <td class="text-center">
+                        <input type="number" min="1" value="@item.Quantity"
+                            onchange="updateQuantity(@item.ProductID, this.value)"
+                            class="form-control form-control-sm text-center mx-auto" style="width: 70px;" />
                     </td>
 
                     <!-- TOTAL -->
-                    <td>
+                    <td class="text-end fw-bold">
                         @((item.Price * item.Quantity).ToString("N0")) ₫
                     </td>
 
                     <!-- REMOVE -->
-                    <td>
-                        <a href="/Cart/Remove/@item.ProductID"
-                           class="btn btn-danger btn-sm">
+                    <td class="text-end">
+                        <button class="btn btn-outline-danger btn-sm" onclick="removeItem(@item.ProductID)">
                             Xóa
-                        </a>
+                        </button>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+
 
     @{
         var total = Model.Sum(x => x.Price * x.Quantity);
@@ -84,9 +80,13 @@
 </div>
 
 @section Scripts {
-<script>
-    function updateQuantity(id, quantity) {
-        window.location.href = `/Cart/UpdateQuantity?id=${id}&quantity=${quantity}`;
-    }
-</script>
+    <script>
+        function updateQuantity(id, quantity) {
+            window.location.href = `/Cart/UpdateQuantity?id=${id}&quantity=${quantity}`;
+        }
+        function removeItem(id) {
+            if (!confirm("Bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng?")) return;
+            window.location.href = `/Cart/Remove/${id}`;
+        }
+    </script>
 }
