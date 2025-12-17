@@ -36,4 +36,20 @@ public class ProductsController : Controller
 
         return View(vm);
     }
+    public IActionResult Index(int? categoryId)
+    {
+        var products = _db.Products
+            .Include(p => p.Category)
+            .Where(p => p.IsAvailable) // chỉ hiện SP đang bán
+            .AsQueryable();
+
+        if (categoryId.HasValue)
+        {
+            products = products.Where(p => p.CategoryID == categoryId.Value);
+        }
+
+        ViewBag.CurrentCategoryId = categoryId;
+
+        return View(products.ToList());
+    }
 }

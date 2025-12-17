@@ -1,103 +1,54 @@
-<<<<<<< HEAD
 @model List<DoAnLapTrinhWebBanThucAnNhanh.Models.Category>
 
-<div id="categories" class="page" style="display:none;">
+<h2 class="mb-3">Danh mục sản phẩm</h2>
 
-    <h2>Danh mục sản phẩm</h2>
+<!-- Nút thêm (GIỮ NGUYÊN FORMAT – CHỈ ĐỔI LINK CHO ADMIN SPA NẾU CẦN) -->
+<button type="button" class="btn btn-success mb-3" onclick="openCreateCategories()">
+        ➕ Thêm sản phẩm
+</button>
 
-    <a href="/Categories/Create" class="btn btn-primary mb-3">
-        <i class="bi bi-plus-lg"></i> Thêm danh mục
-    </a>
+<div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+        <h5 class="m-0">Danh sách danh mục</h5>
+    </div>
 
-    <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white">
-            <h5 class="m-0">Danh sách danh mục</h5>
-        </div>
+    <div class="card-body p-0">
+        <table class="table table-bordered table-hover m-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Tên danh mục</th>
+                    <th width="120">Hành động</th>
+                </tr>
+            </thead>
 
-        <div class="card-body p-0">
-            <table class="table table-bordered table-hover m-0">
-                <thead class="table-dark">
-                    <tr>
-                        <th>#</th>
-                        <th>Tên danh mục</th>
-                        <th width="120">Hành động</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @foreach (var cat in Model)
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var cat in Model)
                     {
                         <tr>
                             <td>@cat.CategoryID</td>
                             <td>@cat.CategoryName</td>
 
                             <td class="text-center">
-                                <a href="/Categories/Edit/@cat.CategoryID" class="btn btn-warning btn-sm">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-
-                                <a href="/Categories/Delete/@cat.CategoryID"
-                                   class="btn btn-danger btn-sm"
-                                   onclick="return confirm('Xoá danh mục này?');">
-                                    <i class="bi bi-trash"></i>
-                                </a>
+                                <button type="button" class="btn btn-danger btn-sm"
+                                    onclick="deleteCategory(@cat.CategoryID)">
+                                <i class="bi bi-trash"></i>
+                            </button>
                             </td>
                         </tr>
                     }
-                </tbody>
-
-            </table>
-        </div>
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="3" class="text-center text-muted py-3">
+                            Chưa có danh mục nào
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
-
 </div>
-=======
-@model List<DoAnLapTrinhWebBanThucAnNhanh.Models.Category>
-
-<h2>Quản lý Danh mục</h2>
-
-<button class="btn btn-primary mb-2" onclick="redirectToAddCategory()">
-    <i class="bi bi-plus-lg"></i> Thêm danh mục
-</button>
-
-<table class="table table-bordered table-hover main-content">
-    <thead class="table-dark">
-        <tr>
-            <th>#</th>
-            <th>Tên danh mục</th>
-            <th>Số lượng món</th>
-            <th>Hành động</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.CategoryID</td>
-                <td>@item.CategoryName</td>
-                <td>@(item.Products?.Count() ?? 0)</td>
-
-                <td>
-                    <a href="/Categories/Edit/@item.CategoryID"
-                       class="btn btn-warning btn-sm">
-                        <i class="bi bi-pencil"></i>
-                    </a>
-
-                    <a href="/Categories/Delete/@item.CategoryID"
-                       class="btn btn-danger btn-sm"
-                       onclick="return confirm('Bạn có chắc muốn xoá danh mục này?');">
-                        <i class="bi bi-trash"></i>
-                    </a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-<script>
-    function redirectToAddCategory() {
-        window.location.href = "/Categories/Create";
-    }
-</script>
->>>>>>> 1b9a1cc19799d4c47eeafba026071668cb0f6d52

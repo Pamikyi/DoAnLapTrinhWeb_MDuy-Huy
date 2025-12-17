@@ -74,62 +74,57 @@ public class CartController : Controller
     }
 
     [HttpPost]
-    public IActionResult Checkout(string ReceiverName, string Phone, string ShippingAddress, string? Request)
+[ValidateAntiForgeryToken]
+public IActionResult Checkout(
+    string ReceiverName,
+    string Phone,
+    string ShippingAddress,
+    string? Request)
+{
+    var cart = HttpContext.Session.GetObject<List<CartItem>>("Cart") ?? new();
+
+    if (!cart.Any())
+        return RedirectToAction("Index", "Home");
+
+    int? userId = HttpContext.Session.GetInt32("UserID");
+    decimal total = cart.Sum(x => x.Price * x.Quantity);
+
+    var order = new CustomerOrder
     {
-        var cart = HttpContext.Session.GetObject<List<CartItem>>("Cart") ?? new();
+        UserID = userId,
+        ReceiverName = ReceiverName,
+        Phone = Phone,
+        ShippingAddress = ShippingAddress,
+        Request = Request,
+        OrderDate = DateTime.Now,
+        TotalAmount = total,
+        Status = "Pending",
+        PaymentMethod = "COD"
+    };
 
-        if (!cart.Any())
-            return RedirectToAction("Index");
+    _context.CustomerOrders.Add(order);
+    _context.SaveChanges();
 
-        // Lấy user đang đăng nhập (UserID đã lưu trong Session)
-        int? userId = HttpContext.Session.GetInt32("UserID");
-
-        if (userId == null)
+    foreach (var item in cart)
+    {
+        _context.OrderDetails.Add(new OrderDetail
         {
-            return RedirectToAction("Login", "Auth");
-        }
-
-        decimal total = cart.Sum(x => x.Price * x.Quantity);
-
-        // 1) Tạo đơn hàng CustomerOrder
-        var order = new CustomerOrder
-        {
-            UserID = userId.Value,
-            ReceiverName = ReceiverName,
-            Phone = Phone,
-            ShippingAddress = ShippingAddress,
-            Request = Request,
-            OrderDate = DateTime.Now,
-            TotalAmount = total,
-            Status = "Pending",
-            PaymentMethod = "COD"
-        };
-
-        _context.CustomerOrders.Add(order);
-        _context.SaveChanges();  // Lưu để lấy CustomerOrdersID
-
-        // 2) Tạo từng dòng OrderDetail
-        foreach (var item in cart)
-        {
-            var detail = new OrderDetail
-            {
-                CustomerOrderID = order.CustomerOrdersID,
-                ProductID = item.ProductID,
-                Quantity = item.Quantity,
-                Price = item.Price
-            };
-
-            _context.OrderDetails.Add(detail);
-        }
-
-        _context.SaveChanges();
-
-        // 3) Xoá giỏ hàng
-        HttpContext.Session.Remove("Cart");
-
-        // 4) Chuyển sang trang thành công
-        return RedirectToAction("Success", new { id = order.CustomerOrdersID });
+            CustomerOrderID = order.CustomerOrdersID,
+            ProductID = item.ProductID,
+            Quantity = item.Quantity,
+            Price = item.Price
+        });
     }
+
+    _context.SaveChanges();
+
+    HttpContext.Session.Remove("Cart");
+
+    // 🔥 QUAN TRỌNG: GỬI THÔNG BÁO SANG TRANG CHỦ
+    TempData["CheckoutSuccess"] = $"🎉 Đặt hàng thành công! Mã đơn #{order.CustomerOrdersID}";
+
+    return RedirectToAction("Index", "Home");
+}
 
 
     public IActionResult Success(int id)
@@ -138,7 +133,6 @@ public class CartController : Controller
         return View(order);
     }
     // ------- HIỂN THỊ TRANG CHECKOUT -------
-    [HttpGet]
     [HttpGet]
     public IActionResult Checkout()
     {

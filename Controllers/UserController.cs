@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using DoAnLapTrinhWebBanThucAnNhanh.Models;
+using DoAnLapTrinhWebBanThucAnNhanh.ViewModels;
 
 [Route("User")]
 public class UserController : Controller
@@ -11,7 +13,9 @@ public class UserController : Controller
         _context = context;
     }
 
+    // ===============================
     // GET: /User/Profile
+    // ===============================
     [HttpGet("Profile")]
     public IActionResult Profile()
     {
@@ -19,12 +23,32 @@ public class UserController : Controller
         if (userId == null)
             return RedirectToAction("Login", "Auth");
 
-        var user = _context.UserHLs.FirstOrDefault(u => u.UserID == userId);
-        return View(user);
+        var user = _context.UserHLs
+            .Include(u => u.Role)
+            .FirstOrDefault(u => u.UserID == userId);
+
+        if (user == null)
+            return RedirectToAction("Login", "Auth");
+
+        var orders = _context.CustomerOrders
+            .Where(o => o.UserID == userId)
+            .OrderByDescending(o => o.OrderDate)
+            .ToList();
+
+        var vm = new UserProfileVM
+        {
+            User = user,
+            Orders = orders
+        };
+
+        return View(vm);
     }
 
+    // ===============================
     // POST: /User/Profile/Update
+    // ===============================
     [HttpPost("Profile/Update")]
+    [ValidateAntiForgeryToken]
     public IActionResult UpdateProfile(UserHL model)
     {
         var user = _context.UserHLs.FirstOrDefault(u => u.UserID == model.UserID);

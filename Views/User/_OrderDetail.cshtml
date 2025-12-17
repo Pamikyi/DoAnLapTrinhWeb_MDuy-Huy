@@ -1,0 +1,48 @@
+@model CustomerOrder
+
+<div class="modal-header">
+    <h5 class="modal-title">
+        Chi tiết đơn hàng #@Model.CustomerOrdersID
+    </h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+
+<div class="modal-body">
+
+    <p><strong>Ngày đặt:</strong> @Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</p>
+    <p><strong>Trạng thái:</strong> @Model.Status</p>
+
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>Sản phẩm</th>
+                <th>Giá</th>
+                <th>SL</th>
+                <th>Tạm tính</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.OrderDetails)
+        {
+            <tr>
+                <td>@item.Product?.ProductName</td>
+                <td>@item.Price.ToString("N0") ₫</td>
+                <td>@item.Quantity</td>
+                <td class="fw-bold text-danger">
+                    @((item.Price * item.Quantity).ToString("N0")) ₫
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <div class="text-end mt-3">
+        <h5>
+            Tổng cộng:
+            <span class="text-danger fw-bold">
+                @Model.TotalAmount.ToString("N0") ₫
+            </span>
+        </h5>
+    </div>
+
+</div>

@@ -1,4 +1,4 @@
-@model DoAnLapTrinhWebBanThucAnNhanh.Models.UserHL
+@model DoAnLapTrinhWebBanThucAnNhanh.ViewModels.UserProfileVM
 
 <div class="container my-5">
 
@@ -6,91 +6,135 @@
 
     @if (TempData["Success"] != null)
     {
-        <div class="alert alert-success">@TempData["Success"]</div>
+        <div class="alert alert-success">
+            @TempData["Success"]
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["Error"]
+        </div>
     }
 
     <div class="row">
 
         <!-- AVATAR -->
         <div class="col-md-3 text-center">
-            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
-                 class="rounded-circle mb-3 shadow"
-                 style="width: 150px; height: 150px; object-fit: cover;" />
+            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="rounded-circle mb-3 shadow"
+                style="width:150px;height:150px;object-fit:cover;" />
 
-            <h5 class="fw-bold mt-2">@Model.Username</h5>
+            <h5 class="fw-bold">@Model.User?.Username</h5>
 
-            <p class="text-muted">
-                Vai trò:
-                <span class="badge bg-primary">
-                    @Model.Role?.RoleName
-                </span>
-            </p>
+            <span class="badge bg-primary">
+                @Model.User.Role.RoleName
+            </span>
         </div>
 
         <!-- FORM -->
         <div class="col-md-9">
-            <div class="card p-4 shadow-sm">
+            <div class="card shadow-sm p-4">
 
-                <form method="post" action="/Profile/update">
+                <form method="post" action="/Profile/Update">
+                    @Html.AntiForgeryToken()
 
-                    <input type="hidden" name="UserID" value="@Model.UserID" />
+                    <input type="hidden" name="UserID" value="@Model.User.RoleID" />
 
                     <div class="row mb-3">
-
                         <div class="col-md-6">
                             <label class="form-label">Tên đăng nhập</label>
-                            <input name="Username"
-                                   value="@Model.Username"
-                                   class="form-control"
-                                   required />
+                            <input name="Username" value="@Model.User.Username" class="form-control" required />
                         </div>
 
                         <div class="col-md-6">
                             <label class="form-label">Email</label>
-                            <input name="Email"
-                                   type="email"
-                                   value="@Model.Email"
-                                   class="form-control"
-                                   required />
+                            <input name="Email" type="email" value="@Model.User.Email" class="form-control" required />
                         </div>
                     </div>
 
                     <div class="row mb-3">
-
                         <div class="col-md-6">
                             <label class="form-label">Số điện thoại</label>
-                            <input name="PhoneNumber"
-                                   value="@Model.PhoneNumber"
-                                   class="form-control" />
+                            <input name="PhoneNumber" value="@Model.User.PhoneNumber" class="form-control" />
                         </div>
 
                         <div class="col-md-6">
                             <label class="form-label">Địa chỉ</label>
-                            <input name="Address"
-                                   value="@Model.Address"
-                                   class="form-control" />
+                            <input name="Address" value="@Model.User.Address" class="form-control" />
                         </div>
                     </div>
 
-                    <!-- MẬT KHẨU — vì bạn nói không dùng nên mình để readonly -->
+                    <!-- PASSWORD (KHÔNG DÙNG) -->
                     <div class="mb-3">
-                        <label class="form-label">Mật khẩu (ẩn)</label>
-                        <input type="password"
-                               value="************"
-                               class="form-control"
-                               readonly />
-                        <small class="text-muted">Không hỗ trợ đổi mật khẩu tại đây.</small>
+                        <label class="form-label">Mật khẩu</label>
+                        <input type="password" value="************" class="form-control" readonly />
+                        <small class="text-muted">
+                            Không hỗ trợ đổi mật khẩu tại đây.
+                        </small>
                     </div>
 
                     <button class="btn btn-success">
                         Cập nhật thông tin
                     </button>
-
                 </form>
 
             </div>
         </div>
+        <hr class="my-5" />
 
+       <div class="col-md-19">
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h5 class="m-0 text-primary">📦 Đơn hàng của tôi</h5>
+        </div>
+
+        <div class="card-body">
+            @if (Model.Orders == null || !Model.Orders.Any())
+            {
+                <div class="alert alert-info mb-0">
+                    Bạn chưa có đơn hàng nào.
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>Mã đơn</th>
+                                <th>Ngày đặt</th>
+                                <th>Trạng thái</th>
+                                <th class="text-end">Tổng tiền</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var o in Model.Orders)
+                            {
+                                <tr>
+                                    <td class="fw-semibold">#@o.CustomerOrdersID</td>
+                                    <td>@o.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
+                                    <td>
+                                        <span class="badge
+                                            @(o.Status == "Pending" ? "bg-warning" :
+                                              o.Status == "Processing" ? "bg-info" :
+                                              o.Status == "Completed" ? "bg-success" :
+                                              "bg-secondary")">
+                                            @o.Status
+                                        </span>
+                                    </td>
+                                    <td class="text-end fw-bold text-danger">
+                                        @o.TotalAmount.ToString("N0") ₫
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
     </div>
-
+</div>
+    </div>
 </div>

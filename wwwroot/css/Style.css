@@ -188,31 +188,3 @@ body {
   left: 0;
   z-index: 1030;
 }
-
-/* ================================
-   GLASS TABLE (TRANSPARENT)
-   ================================ */
-.glass-table {
-  background: transparent !important;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-/* header */
-.glass-table thead {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(6px);
-}
-
-/* body rows */
-.glass-table tbody tr {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(4px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-/* hover vẫn thấy gradient */
-.glass-table tbody tr:hover {
-  background: rgba(255, 255, 255, 0.18);
-}

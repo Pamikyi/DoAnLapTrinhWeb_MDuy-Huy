@@ -6,9 +6,6 @@ const sidebar = document.getElementById('sidebar');
 const sidebarToggle = document.getElementById('sidebarToggle');
 const logoutBtn = document.getElementById('logoutBtn');
 
-
-
-
 // Cart
  function formatCurrency(num) {
    return num.toLocaleString('vi-VN') + ' ₫';
@@ -39,5 +36,3 @@ const logoutBtn = document.getElementById('logoutBtn');
      updateCart();
    });
  });
-
- updateCart();

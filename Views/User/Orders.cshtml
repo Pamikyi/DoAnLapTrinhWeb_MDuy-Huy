@@ -1,0 +1,71 @@
+@model List<CustomerOrder>
+
+<div class="container my-5">
+    <h3 class="mb-4 text-primary">📦 Đơn hàng của tôi</h3>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            Bạn chưa có đơn hàng nào.
+        </div>
+    }
+    else
+    {
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Mã đơn</th>
+                    <th>Ngày đặt</th>
+                    <th>Trạng thái</th>
+                    <th>Tổng tiền</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var o in Model)
+            {
+                <tr>
+                    <td>#@o.CustomerOrdersID</td>
+                    <td>@o.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>
+                        <span class="badge
+                            @(o.Status == "Pending" ? "bg-warning" :
+                              o.Status == "Processing" ? "bg-info" :
+                              o.Status == "Completed" ? "bg-success" :
+                              "bg-secondary")">
+                            @o.Status
+                        </span>
+                    </td>
+                    <td class="fw-bold text-danger">
+                        @o.TotalAmount.ToString("N0") ₫
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary"
+                                onclick="openOrderDetail(@o.CustomerOrdersID)">
+                            Xem
+                        </button>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+</div>
+
+<!-- MODAL -->
+<div class="modal fade" id="orderDetailModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content"></div>
+    </div>
+</div>
+
+<script>
+    function openOrderDetail(orderId) {
+        fetch('/User/OrderDetail?id=' + orderId)
+            .then(res => res.text())
+            .then(html => {
+                document.querySelector('#orderDetailModal .modal-content').innerHTML = html;
+                new bootstrap.Modal(document.getElementById('orderDetailModal')).show();
+            });
+    }
+</script>

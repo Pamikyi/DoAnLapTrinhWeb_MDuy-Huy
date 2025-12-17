@@ -1,0 +1,38 @@
+@model DoAnLapTrinhWebBanThucAnNhanh.Models.Category
+@{
+    Layout = null;   // ✅ BẮT BUỘC cho PartialView SPA
+}
+
+<div class="container mt-4">
+    <h3 class="mb-3">➕ Thêm danh mục mới</h3>
+
+    <form onsubmit="return submitCreateCategory(this)"
+          class="card p-4 shadow-sm">
+
+        @Html.AntiForgeryToken()
+
+        <!-- CATEGORY NAME -->
+        <div class="mb-3">
+            <label class="form-label">Tên danh mục</label>
+            <input asp-for="CategoryName"
+                   class="form-control"
+                   placeholder="Nhập tên danh mục"
+                   required />
+            <span asp-validation-for="CategoryName"
+                  class="text-danger"></span>
+        </div>
+
+        <!-- ACTION BUTTONS -->
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> Thêm danh mục
+            </button>
+
+            <button type="button"
+                    class="btn btn-secondary"
+                    onclick="loadPage('categories')">
+                Quay lại
+            </button>
+        </div>
+    </form>
+</div>

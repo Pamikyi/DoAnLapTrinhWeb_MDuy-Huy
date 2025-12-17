@@ -1,0 +1,55 @@
+@model List<Product>
+
+<div class="container my-5">
+
+    <h3 class="mb-4 text-primary">
+        @(ViewBag.CurrentCategoryId == null
+                                ? "🍔 Tất cả sản phẩm"
+                                : "🍽️ Sản phẩm theo danh mục")
+    </h3>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            Không có sản phẩm nào trong danh mục này.
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var p in Model)
+            {
+                <div class="col-md-3">
+                    <div class="card h-100 shadow-sm">
+
+                        <img src="@p.ImageURL" class="card-img-top" style="height:180px;object-fit:cover;" />
+
+                        <div class="card-body d-flex flex-column">
+                            <h6 class="card-title fw-bold">
+                                @p.ProductName
+                            </h6>
+
+                            <span class="badge bg-secondary mb-2">
+                                @p.Category?.CategoryName
+                            </span>
+
+                            <p class="fw-bold text-danger mt-auto">
+                                @p.Price.ToString("N0") ₫
+                            </p>
+                            <div class="btn-group-custom mt-auto">
+                                <a asp-controller="Products" asp-action="Details" asp-route-id="@p.ProductID"
+                                    class="btn btn-outline-primary flex-fill">
+                                    Chi tiết
+                                </a>
+                                <a asp-controller="Cart" asp-action="Add" asp-route-id="@p.ProductID"
+                                    class="btn btn-primary flex-fill">
+                                    Thêm vào giỏ
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

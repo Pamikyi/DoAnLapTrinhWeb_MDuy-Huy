@@ -1,31 +1,29 @@
-<<<<<<< HEAD
 @model List<DoAnLapTrinhWebBanThucAnNhanh.Models.CustomerOrder>
 
-<div id="orders" class="page" style="display:none;">
+<h2 class="mb-3">Quản lý Đơn hàng</h2>
 
-    <h2>Quản lý Đơn hàng</h2>
+<div class="card shadow-sm mt-3">
+    <div class="card-header bg-primary text-white">
+        <h5 class="m-0">Danh sách đơn hàng</h5>
+    </div>
 
-    <div class="card shadow-sm mt-3">
-        <div class="card-header bg-primary text-white">
-            <h5 class="m-0">Danh sách đơn hàng</h5>
-        </div>
+    <div class="card-body p-0">
+        <table class="table table-bordered table-hover m-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>Mã đơn</th>
+                    <th>Khách hàng</th>
+                    <th>Ngày đặt</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                    <th width="140">Hành động</th>
+                </tr>
+            </thead>
 
-        <div class="card-body p-0">
-
-            <table class="table table-bordered table-hover m-0">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Mã đơn</th>
-                        <th>Khách hàng</th>
-                        <th>Ngày đặt</th>
-                        <th>Tổng tiền</th>
-                        <th>Trạng thái</th>
-                        <th width="120">Hành động</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @foreach (var order in Model)
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var order in Model)
                     {
                         <tr>
                             <td>@order.CustomerOrdersID</td>
@@ -34,78 +32,37 @@
                             <td>@order.TotalAmount.ToString("N0") ₫</td>
 
                             <td>
-                                <span class="badge bg-info">@order.Status</span>
+                                <span class="badge bg-info">
+                                    @order.Status
+                                </span>
                             </td>
 
                             <td class="text-center">
-                                <a href="/Orders/Details/@order.CustomerOrdersID"
-                                   class="btn btn-primary btn-sm">
+                                <!-- VIEW DETAIL (SPA) -->
+                                <button class="btn btn-primary btn-sm"
+                                        onclick="openOrderDetail(@order.CustomerOrdersID)">
                                     <i class="bi bi-eye"></i>
-                                </a>
+                                </button>
 
-                                <a href="/Orders/Delete/@order.CustomerOrdersID"
-                                   class="btn btn-danger btn-sm"
-                                   onclick="return confirm('Xoá đơn hàng này?');">
+                                <!-- DELETE (SPA) -->
+                                <button class="btn btn-danger btn-sm"
+                                        onclick="deleteOrder(@order.CustomerOrdersID)">
                                     <i class="bi bi-trash"></i>
-                                </a>
-
+                                </button>
                             </td>
                         </tr>
                     }
-                </tbody>
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-3">
+                            Chưa có đơn hàng nào
+                        </td>
+                    </tr>
+                }
+            </tbody>
 
-            </table>
-        </div>
+        </table>
     </div>
-
 </div>
-=======
-@model List<DoAnLapTrinhWebBanThucAnNhanh.Models.OrderDetail>
-
-<h2>Chi tiết đơn hàng #@ViewBag.OrderID</h2>
-
-<table class="table table-bordered table-hover">
-    <thead class="table-dark">
-        <tr>
-            <th>#</th>
-            <th>Sản phẩm</th>
-            <th>Đơn giá</th>
-            <th>Số lượng</th>
-            <th>Thành tiền</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (!Model.Any())
-        {
-            <tr>
-                <td colspan="5" class="text-center">Không có sản phẩm</td>
-            </tr>
-        }
-        else
-        {
-            foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.OrderDetailID</td>
-                    <td>@item.Product?.ProductName</td>
-                    <td>@item.UnitPrice.ToString("N0") ₫</td>
-                    <td>@item.Quantity</td>
-                    <td>@((item.UnitPrice * item.Quantity).ToString("N0")) ₫</td>
-                </tr>
-            }
-        }
-    </tbody>
-    <tfoot>
-        <tr>
-            <th colspan="4" class="text-end">Tổng cộng</th>
-            <th>@ViewBag.Total.ToString("N0") ₫</th>
-        </tr>
-    </tfoot>
-</table>
-
-<a asp-controller="Orders"
-   asp-action="Index"
-   class="btn btn-secondary">
-    ← Quay lại đơn hàng
-</a>
->>>>>>> 1b9a1cc19799d4c47eeafba026071668cb0f6d52

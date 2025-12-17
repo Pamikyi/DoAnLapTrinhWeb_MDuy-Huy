@@ -1,0 +1,31 @@
+@model List<DoAnLapTrinhWebBanThucAnNhanh.Models.Category>
+
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" role="button"
+       data-bs-toggle="dropdown" aria-expanded="false">
+        Danh mục
+    </a>
+
+    <ul class="dropdown-menu">
+        <li>
+            <a class="dropdown-item" href="/Products">Tất cả</a>
+        </li>
+        <li><hr class="dropdown-divider" /></li>
+
+        @if (Model == null || !Model.Any())
+        {
+            <li><span class="dropdown-item-text text-muted">Chưa có danh mục</span></li>
+        }
+        else
+        {
+            @foreach (var c in Model)
+            {
+                <li>
+                    <a class="dropdown-item" href="/Products?categoryId=@c.CategoryID">
+                        @c.CategoryName
+                    </a>
+                </li>
+            }
+        }
+    </ul>
+</li>

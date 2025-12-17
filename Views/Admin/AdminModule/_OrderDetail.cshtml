@@ -1,0 +1,63 @@
+@model DoAnLapTrinhWebBanThucAnNhanh.Models.CustomerOrder
+
+<h3 class="mb-3">📦 Chi tiết đơn hàng #@Model.CustomerOrdersID</h3>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <p><strong>Khách hàng:</strong> @Model.ReceiverName</p>
+        <p><strong>Số điện thoại:</strong> @Model.Phone</p>
+        <p><strong>Địa chỉ:</strong> @Model.ShippingAddress</p>
+        <p><strong>Ngày đặt:</strong> @Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</p>
+        <p>
+            <strong>Trạng thái:</strong>
+            <span class="badge bg-info">@Model.Status</span>
+        </p>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+        <h5 class="m-0">Danh sách sản phẩm</h5>
+    </div>
+
+    <div class="card-body p-0">
+        <table class="table table-bordered table-hover m-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Tạm tính</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var d in Model.OrderDetails)
+                {
+                    <tr>
+                        <td>@d.ProductID</td>
+                        <td>@d.Product?.ProductName</td>
+                        <td>@d.Price.ToString("N0") ₫</td>
+                        <td>@d.Quantity</td>
+                        <td>@(d.Price * d.Quantity).ToString("N0") ₫</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="text-end mt-4">
+    <h4>
+        Tổng tiền:
+        <span class="text-danger fw-bold">
+            @Model.TotalAmount.ToString("N0") ₫
+        </span>
+    </h4>
+
+    <button class="btn btn-secondary mt-2"
+            onclick="loadPage('orders')">
+        ← Quay lại danh sách
+    </button>
+</div>

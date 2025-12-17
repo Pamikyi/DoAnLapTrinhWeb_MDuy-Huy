@@ -90,6 +90,40 @@
     </div>
 </div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+<script>
+    document.getElementById("checkoutForm")
+        .addEventListener("submit", function (e) {
+
+        e.preventDefault(); // 🚨 DÒNG QUAN TRỌNG NHẤT
+
+        const form = this;
+        const formData = new FormData(form);
+
+        fetch('/Cart/Checkout', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'RequestVerificationToken':
+                    document.querySelector('input[name="__RequestVerificationToken"]').value
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                showToast(`🎉 Đặt hàng thành công! Mã đơn #${data.orderId}`);
+
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 2000);
+            }
+        });
+    });
+
+    function showToast(message) {
+        const toast = document.getElementById("checkoutToast");
+        toast.textContent = message;
+        toast.classList.add("show");
+
+        setTimeout(() => toast.classList.remove("show"), 2000);
+    }
+</script>

@@ -13,9 +13,7 @@ namespace DoAnLapTrinhWebBanThucAnNhanh.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CustomerOrdersID { get; set; }
 
-        // FK → UserHL
-        [Required]
-        public int UserID { get; set; }
+        public int? UserID { get; set; }
 
         [ForeignKey(nameof(UserID))]
         public UserHL? User { get; set; }

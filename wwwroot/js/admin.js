@@ -267,7 +267,35 @@
       })
       .catch(err => alert("Xoá thất bại: " + String(err.message || err)));
   };
+  window.deleteCategory = function (id) {
+    if (!confirm("Bạn có chắc muốn xoá sản phẩm này?")) return;
 
+    const el = mainEl();
+    if (!el) return;
+
+    const token = getTokenFromHiddenForm();
+    const fd = new FormData();
+    fd.append("id", id);
+
+    showLoading("Đang xoá...");
+
+    fetch("/Admin/DeleteCategory", {
+      method: "POST",
+      body: fd,
+      headers: baseHeaders(token),
+      credentials: "same-origin"
+    })
+      .then(async r => {
+        const text = await r.text();
+        if (!r.ok) throw new Error(text || `HTTP ${r.status}`);
+        return text;
+      })
+      .then(html => {
+        el.innerHTML = `<div class="alert alert-success mt-3">✅ Đã xoá</div>` + html;
+        setActiveMenuByKey("products");
+      })
+      .catch(err => alert("Xoá thất bại: " + String(err.message || err)));
+  };
   // =========================================================
   // 5) INIT APP
   // =========================================================
@@ -279,10 +307,359 @@
     loadPage("dashboard");
     setActiveMenuByKey("dashboard");
   });
+  // ===================================================
+  // CATEGORY: OPEN CREATE
+  // ===================================================
+  window.openCreateCategories = function () {
+    const el = document.getElementById("mainContent");
+    if (!el) return;
 
+    // UI loading
+    el.innerHTML = `
+    <div class="text-center mt-5">
+      <div class="spinner-border text-success"></div>
+      <p class="fw-bold mt-2">Đang tải form danh mục...</p>
+    </div>
+  `;
+
+    // ✅ CHỈ fetch ACTION
+    fetch("/Admin/CreateCategory", {
+      cache: "no-store",
+      headers: { "X-Requested-With": "XMLHttpRequest" }
+    })
+      .then(r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.text();
+      })
+      .then(html => {
+        el.innerHTML = html;
+      })
+      .catch(err => {
+        el.innerHTML = `
+        <div class="alert alert-danger mt-3">
+          ❌ Không load được CreateCategory<br/>
+          ${err.message}
+        </div>
+      `;
+      });
+  };
+
+  // ===================================================
+  // CATEGORY: SUBMIT CREATE
+  // ===================================================
+  window.submitCreateCategory = function (form) {
+    const el = document.getElementById("mainContent");
+    if (!el) return false;
+
+    // UI loading
+    el.innerHTML = `
+    <div class="text-center mt-5">
+      <div class="spinner-border text-success"></div>
+      <p class="fw-bold mt-2">Đang lưu danh mục...</p>
+    </div>
+  `;
+
+    const fd = new FormData(form);
+    const token = form.querySelector('input[name="__RequestVerificationToken"]')?.value;
+
+    // ✅ POST đúng ACTION
+    fetch("/Admin/CreateCategory", {
+      method: "POST",
+      body: fd,
+      headers: {
+        "RequestVerificationToken": token,
+        "X-Requested-With": "XMLHttpRequest"
+      },
+      credentials: "same-origin"
+    })
+      .then(r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.text();
+      })
+      .then(html => {
+        el.innerHTML = `
+        <div class="alert alert-success mt-3">
+          ✅ Thêm danh mục thành công
+        </div>
+      ` + html;
+
+        if (typeof setActiveMenuByKey === "function") {
+          setActiveMenuByKey("categories");
+        }
+      })
+      .catch(err => {
+        el.innerHTML = `
+        <div class="alert alert-danger mt-3">
+          ❌ Lỗi khi thêm danh mục<br/>
+          ${err.message}
+        </div>
+      `;
+      });
+
+    return false; // ❗ KHÔNG reload trang
+  };
+  // ===================================================
+  // USER: OPEN EDIT
+  // ===================================================
+  window.openEditUser = function (id) {
+    const el = document.getElementById("mainContent");
+    if (!el) return;
+
+    el.innerHTML = `
+    <div class="text-center mt-5">
+      <div class="spinner-border text-warning"></div>
+      <p class="fw-bold mt-2">Đang tải thông tin người dùng...</p>
+    </div>
+  `;
+
+    fetch(`/Admin/EditUser?id=${id}`, {
+      cache: "no-store",
+      headers: { "X-Requested-With": "XMLHttpRequest" }
+    })
+      .then(r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.text();
+      })
+      .then(html => el.innerHTML = html)
+      .catch(err => {
+        el.innerHTML = `
+        <div class="alert alert-danger mt-3">
+          ❌ Không load được EditUser<br/>
+          ${err.message}
+        </div>
+      `;
+      });
+  };
+  // ===================================================
+  // USER: SUBMIT EDIT
+  // ===================================================
+  window.submitEditUser = function (form) {
+    const el = document.getElementById("mainContent");
+    if (!el) return false;
+
+    el.innerHTML = `
+    <div class="text-center mt-5">
+      <div class="spinner-border text-success"></div>
+      <p class="fw-bold mt-2">Đang lưu thay đổi...</p>
+    </div>
+  `;
+
+    const fd = new FormData(form);
+    const token = form.querySelector('input[name="__RequestVerificationToken"]').value;
+
+    fetch("/Admin/EditUser", {
+      method: "POST",
+      body: fd,
+      headers: {
+        "RequestVerificationToken": token,
+        "X-Requested-With": "XMLHttpRequest"
+      },
+      credentials: "same-origin"
+    })
+      .then(r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.text();
+      })
+      .then(html => {
+        el.innerHTML = `
+        <div class="alert alert-success mt-3">
+          ✅ Cập nhật người dùng thành công
+        </div>
+      ` + html;
+
+        if (typeof setActiveMenuByKey === "function") {
+          setActiveMenuByKey("users");
+        }
+      })
+      .catch(err => {
+        el.innerHTML = `
+        <div class="alert alert-danger mt-3">
+          ❌ Lưu thất bại<br/>
+          ${err.message}
+        </div>
+      `;
+      });
+
+    return false;
+  };
+  // ===================================================
+  // ORDER: OPEN DETAIL (GLOBAL)
+  // ===================================================
+  window.openOrderDetail = function (orderId) {
+    const el = document.getElementById("mainContent");
+    if (!el) return;
+
+    el.innerHTML = `
+        <div class="text-center mt-5">
+            <div class="spinner-border text-primary"></div>
+            <p class="fw-bold mt-2">Đang tải chi tiết đơn hàng...</p>
+        </div>
+    `;
+
+    fetch(`/Admin/OrderDetail?id=${orderId}`, {
+      cache: "no-store",
+      headers: { "X-Requested-With": "XMLHttpRequest" }
+    })
+      .then(r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.text();
+      })
+      .then(html => {
+        el.innerHTML = html;
+      })
+      .catch(err => {
+        el.innerHTML = `
+                <div class="alert alert-danger mt-3">
+                    ❌ Không load được chi tiết đơn hàng<br/>
+                    ${err.message}
+                </div>
+            `;
+      });
+  };
+  // ===================================================
+  // ORDER: DELETE (SPA)
+  // ===================================================
+  window.deleteOrder = function (orderId) {
+    if (!confirm("Bạn có chắc muốn xoá đơn hàng này?"))
+      return;
+
+    const el = document.getElementById("mainContent");
+    if (!el) return;
+
+    const token = document.querySelector(
+      '#antiForgeryForm input[name="__RequestVerificationToken"]'
+    )?.value;
+
+    el.innerHTML = `
+        <div class="text-center mt-5">
+            <div class="spinner-border text-danger"></div>
+            <p class="fw-bold mt-2">Đang xoá đơn hàng...</p>
+        </div>
+    `;
+
+    const fd = new FormData();
+    fd.append("id", orderId);
+
+    fetch("/Admin/DeleteOrder", {
+      method: "POST",
+      body: fd,
+      headers: {
+        "RequestVerificationToken": token,
+        "X-Requested-With": "XMLHttpRequest"
+      },
+      credentials: "same-origin"
+    })
+      .then(r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.text();
+      })
+      .then(html => {
+        el.innerHTML = `
+                <div class="alert alert-success mt-3">
+                    🗑️ Đã xoá đơn hàng thành công
+                </div>
+            ` + html;
+
+        if (typeof setActiveMenuByKey === "function") {
+          setActiveMenuByKey("orders");
+        }
+      })
+      .catch(err => {
+        el.innerHTML = `
+                <div class="alert alert-danger mt-3">
+                    ❌ Xoá đơn hàng thất bại<br/>
+                    ${err.message}
+                </div>
+            `;
+      });
+  };
+  // ===================================================
+  // USER: DELETE (SPA)
+  // ===================================================
+  window.deleteUser = function (userId) {
+    if (!confirm("Bạn có chắc muốn xoá người dùng này?")) return;
+
+    const el = document.getElementById("mainContent");
+    if (!el) return;
+
+    // lấy token từ form ẩn (bạn đang dùng kiểu này cho delete khác)
+    const token = document.querySelector(
+      '#antiForgeryForm input[name="__RequestVerificationToken"]'
+    )?.value;
+
+    el.innerHTML = `
+    <div class="text-center mt-5">
+      <div class="spinner-border text-danger"></div>
+      <p class="fw-bold mt-2">Đang xoá người dùng...</p>
+    </div>
+  `;
+
+    const fd = new FormData();
+    fd.append("id", userId);
+
+    fetch("/Admin/DeleteUser", {
+      method: "POST",
+      body: fd,
+      headers: {
+        "RequestVerificationToken": token,
+        "X-Requested-With": "XMLHttpRequest"
+      },
+      credentials: "same-origin"
+    })
+      .then(async r => {
+        const html = await r.text();
+        if (!r.ok) throw new Error(html || `HTTP ${r.status}`);
+        return html;
+      })
+      .then(html => {
+        el.innerHTML = `
+        <div class="alert alert-success mt-3">
+          🗑️ Đã xoá người dùng
+        </div>
+      ` + html;
+
+        if (typeof setActiveMenuByKey === "function") {
+          setActiveMenuByKey("users");
+        }
+      })
+      .catch(err => {
+        el.innerHTML = `
+        <div class="alert alert-danger mt-3">
+          ❌ Xoá thất bại<br/>
+          ${err.message}
+        </div>
+      `;
+      });
+  };
+  // ===================================================
+// CONTACT: DELETE (SPA)
+// ===================================================
+window.deleteContact = function (id) {
+  if (!confirm("Bạn có chắc muốn xoá liên hệ này?")) return;
+
+  const el = document.getElementById("mainContent");
+  const token = document.querySelector(
+    '#antiForgeryForm input[name="__RequestVerificationToken"]'
+  )?.value;
+
+  const fd = new FormData();
+  fd.append("id", id);
+
+  fetch("/Admin/DeleteContact", {
+    method: "POST",
+    body: fd,
+    headers: {
+      "RequestVerificationToken": token,
+      "X-Requested-With": "XMLHttpRequest"
+    },
+    credentials: "same-origin"
+  })
+    .then(r => r.text())
+    .then(html => el.innerHTML = html)
+    .catch(err => alert(err));
+};
   // =========================================================
-  // 6) EXPOSE (nếu cần gọi từ HTML)
+  // ) EXPOSE (nếu cần gọi từ HTML)
   // =========================================================
   window.loadPage = loadPage;
-
 })();
