@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Đồ Án Lập Trình Web Bán Thức Ăn Nhanh")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+95e20cf9e2d530f4a445a8efe2354c0f082f79e4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+948a2b4310e122e67e08ffbbc7f4a0deb0f537ac")]
 [assembly: System.Reflection.AssemblyProductAttribute("Đồ Án Lập Trình Web Bán Thức Ăn Nhanh")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Đồ Án Lập Trình Web Bán Thức Ăn Nhanh")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

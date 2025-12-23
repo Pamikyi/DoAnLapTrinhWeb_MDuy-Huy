@@ -534,4 +534,3 @@ C:\Users\1904d\OneDrive\Máy tính\Đồ án\24DTH2A_LTW_PhamMinhDuy[2400007689]
 C:\Users\1904d\OneDrive\Máy tính\Đồ án\24DTH2A_LTW_PhamMinhDuy[2400007689]_PhanDucHuy[2400008784]\obj\Debug\net8.0\Đồ Án Lập Trình Web Bán Thức Ăn Nhanh.pdb
 C:\Users\1904d\OneDrive\Máy tính\Đồ án\24DTH2A_LTW_PhamMinhDuy[2400007689]_PhanDucHuy[2400008784]\obj\Debug\net8.0\Đồ Án Lập Trình Web Bán Thức Ăn Nhanh.genruntimeconfig.cache
 C:\Users\1904d\OneDrive\Máy tính\Đồ án\24DTH2A_LTW_PhamMinhDuy[2400007689]_PhanDucHuy[2400008784]\obj\Debug\net8.0\ref\Đồ Án Lập Trình Web Bán Thức Ăn Nhanh.dll
-C:\Users\1904d\OneDrive\Máy tính\Đồ án\24DTH2A_LTW_PhamMinhDuy[2400007689]_PhanDucHuy[2400008784]\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
